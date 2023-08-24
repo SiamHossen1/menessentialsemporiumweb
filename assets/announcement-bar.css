@@ -1,0 +1,19 @@
+.announcement_bar_container {
+  background-color: #fff3b3;
+  color: var(--base-color);
+}
+.show_announcement_social {
+  text-align: center;
+  padding-block: 1rem;
+}
+@media only screen and (min-width: 768px) {
+  .show_announcement_social {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.show_announcement_bar {
+  padding-block: 1rem;
+  text-align: center;
+}

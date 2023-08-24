@@ -1,0 +1,21 @@
+.social_links_container {
+  display: none;
+  text-align: center;
+}
+@media only screen and (min-width: 768px) {
+  .social_links_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+.social_link {
+  display: flex;
+  align-items: center;
+  padding-left: 1.5rem;
+  color: var(--base-color);
+}
+.social_link .icon {
+  height: 2.2rem;
+  width: 2.2rem;
+}

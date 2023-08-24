@@ -15,13 +15,21 @@
 
     {{ content_for_header }}
 
+    {% comment %} 
+    Custom CSS properties and variables for various design elements based on theme settings.
+    {% endcomment %}
     {% render 'root-css' %}
 
+    {% comment %}
+    Linking 'base.css' stylesheet to ensure consistent styling across the theme's pages. 
+    {% endcomment %}
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
   </head>
 
   <body>
+
+    {% sections 'header-group' %}
 
     <main>
       {{ content_for_layout }}

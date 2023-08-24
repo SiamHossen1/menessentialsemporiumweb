@@ -1,0 +1,15 @@
+{
+  "name": "Header",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Welcome to our store",
+        "link": "",
+        "show_social": false
+      }
+    }
+  },
+  "order": ["announcement-bar"]
+}

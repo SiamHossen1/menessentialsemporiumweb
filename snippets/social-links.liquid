@@ -1,0 +1,35 @@
+<ul class="social_links_container">
+
+  {%- if settings.social_facebook_link != blank -%}
+    <li class="social_links_item">
+      <a href="{{ settings.social_facebook_link }}" class="social_link">
+        {%- render 'icon-facebook' -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_instagram_link != blank -%}
+    <li class="social_links_item">
+      <a href="{{ settings.social_facebook_link }}" class="social_link">
+        {%- render 'icon-instagram' -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_youtube_link != blank -%}
+    <li class="social_links_item">
+      <a href="{{ settings.social_facebook_link }}" class="social_link">
+        {%- render 'icon-youtube' -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+  {%- if settings.social_twitter_link != blank -%}
+    <li class="social_links_item">
+      <a href="{{ settings.social_facebook_link }}" class="social_link">
+        {%- render 'icon-twitter' -%}
+      </a>
+    </li>
+  {%- endif -%}
+
+</ul>
