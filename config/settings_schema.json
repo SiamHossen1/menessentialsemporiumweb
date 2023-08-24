@@ -1,1 +1,90 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Men Essentials Emporium",
+    "theme_version": "1.0",
+    "theme_author": "Siam Hossen",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "color",
+        "id": "base_color",
+        "label": "Base",
+        "default": "#142C73"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent",
+        "default": "#009688"
+      },
+      {
+        "type": "color",
+        "id": "primary_background",
+        "label": "Primary background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "secondary_background",
+        "label": "Secondary background",
+        "default": "#F6F7FA"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "default": "avenir_next_n6",
+        "label": "Font",
+        "info": "Selecting a different font can affect the speed of your store.[Learn more about system fonts.](https://help.shopify.com/en/manual/online-store/store-speed/improving-speed#fonts)"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 100,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading font size scale",
+        "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "default": "avenir_next_n4",
+        "label": "Font",
+        "info": "Selecting a different font can affect the speed of your store.[Learn more about system fonts.](https://help.shopify.com/en/manual/online-store/store-speed/improving-speed#fonts)"
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "min": 100,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "label": "Body font size scale",
+        "default": 100
+      }
+    ]
+  }
+]

@@ -1,1 +1,15 @@
-{}
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "base_color": "#142C73",
+      "accent_color": "#009688",
+      "primary_background": "#FFFFFF",
+      "secondary_background": "#F6F7FA",
+      "type_header_font": "avenir_next_n6",
+      "heading_scale": 100,
+      "type_body_font": "avenir_next_n4",
+      "body_scale": 100
+    }
+  }
+}
