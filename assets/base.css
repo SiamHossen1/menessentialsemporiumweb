@@ -33,6 +33,7 @@ header {
     padding-inline: 2.5rem;
   }
 }
+
 @media screen and (min-width: 992px) {
   section,
   header {
@@ -41,10 +42,20 @@ header {
 }
 
 ol,
-ul {
+ul,
+li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+  color: var(--base-color);
+}
+
+/* Reusable classes */
+.icon {
+  cursor: pointer;
+}
 /* Set the base font size using the body font scale */
 html {
   font-size: calc(var(--font-body-scale) * 62.5%);

@@ -8,6 +8,32 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 50,
+        "max": 100,
+        "step": 5,
+        "default": 50,
+        "unit": "px",
+        "label": "Logo width"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
     "name": "Colors",
     "settings": [
       {

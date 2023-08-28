@@ -2,6 +2,7 @@
   "current": "Default",
   "presets": {
     "Default": {
+      "logo_width": 50,
       "base_color": "#142C73",
       "button_text_color": "#FFFFFF",
       "accent_color": "#009688",

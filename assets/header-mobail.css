@@ -1,0 +1,141 @@
+.header_drawer_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+@media screen and (min-width: 768px) {
+  .header_drawer_container {
+    display: none;
+  }
+}
+/* Hide the header by moving it off-screen */
+.hide-header {
+  transform: translateY(-105%);
+}
+.open {
+  padding: 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  margin-left: -10px;
+}
+.open:hover {
+  background-color: var(--secondary-background);
+}
+.icon-hamburger,
+.icon-close {
+  width: 2rem;
+}
+.header_logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.header_links_container {
+  display: flex;
+  align-items: center;
+}
+.header_links_container > * {
+  margin-left: 1.5rem;
+}
+.icon-search,
+.icon-cart {
+  width: 2.5rem;
+}
+.icon-search {
+  margin-top: 0.3rem;
+}
+/* nav styles */
+.menu_container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: -100%;
+  width: 80%;
+  height: 100%;
+  background-color: var(--primary-background);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: left 0.5s ease;
+  overflow-y: auto;
+  z-index: 2;
+}
+.menu_container.active {
+  left: 0;
+}
+.close_icon_container {
+  padding: 1.5rem 1.5rem 0 1.5rem;
+}
+.close {
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+  margin-left: -10px;
+}
+.close:hover {
+  background-color: var(--secondary-background);
+}
+.menu-link {
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+  cursor: pointer;
+}
+.menu-link:hover {
+  background-color: var(--secondary-background);
+}
+.link_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon-caret {
+  width: 1.5rem;
+  transform: rotate(270deg);
+}
+.menu .dropdown-child,
+.menu .dropdown-grandchild {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.menu .active {
+  max-height: 2000px;
+}
+.child_menu-link,
+.grandchild_menu-link {
+  padding-inline: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 0;
+  cursor: pointer;
+}
+.navbar_links_container {
+  margin-top: 2rem;
+}
+.mobail_account_container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+}
+.mobail_account_container:hover {
+  background-color: var(--secondary-background);
+}
+.icon-account {
+  width: 2rem;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 5000px;
+  background-color: rgba(20, 44, 115, 0.3);
+  display: none;
+  z-index: 1;
+}
+.showElement {
+  display: block;
+}

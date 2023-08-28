@@ -1,8 +1,7 @@
 {{ 'announcement-bar.css' | asset_url | stylesheet_tag }}
 
 {% liquid
-
-  #This part of code checks f-or social links, announcement bar text, and the visibility of social links
+  # This part of code checks f-or social links, announcement bar text, and the visibility of social links
 
   assign has_social_links = false
   assign has_announcement_bar = true
@@ -14,90 +13,79 @@
 
   if section.settings.text == blank
     assign has_announcement_bar = false
-  endif 
+  endif
 
   if section.settings.show_social
     assign show_social_links = true
-  endif 
-
+  endif
 %}
 
-{% if show_social_links and has_social_links %}
+{% if has_social_links %}
   {{ 'social-links.css' | asset_url | stylesheet_tag }}
 {% endif %}
 
 {% if section.settings.show_announcement_bar %}
-
   <section class="{%if show_social_links and has_social_links and has_announcement_bar%}show_announcement_social announcement_bar_container{% elsif has_announcement_bar%}show_announcement_bar announcement_bar_container{% endif %}">
-
     {%- if section.settings.text != blank -%}
-
       {%- if section.settings.link != blank -%}
-
         <a href="{{ section.settings.link }}">
-
-        {%- endif -%}
-
-        <p class="announcement_bar_message h4">
-          <span>{{ section.settings.text | escape }}</span>
-        </p>
-
-        {%- if section.settings.link != blank -%}
-
-        </a>
-
       {%- endif -%}
 
+      <p class="announcement_bar_message h4">
+        <span>{{ section.settings.text | escape }}</span>
+      </p>
+
+      {%- if section.settings.link != blank -%}
+        </a>
+      {%- endif -%}
     {%- endif -%}
 
     {% if show_social_links and has_social_links %}
-      {% render 'social-links' %}
+      {% render 'social-links', device: 'desktop-social_links_container' %}
     {% endif %}
-
   </section>
-
 {% endif %}
 
-
 {% schema %}
-  {
-    "name": "Announcement bar",
-    "enabled_on": {
-      "groups": ["header"]
+{
+  "name": "Announcement bar",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement_bar",
+      "default": true,
+      "label": "Show announcement bar"
     },
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "show_announcement_bar",
-        "default": true,
-        "label": "Show announcement bar"
-      },
-      {
-        "type": "text",
-        "id": "text",
-        "default": "FREE SHIPPING - no code needed",
-        "label": "Text"
-      },
-      {
-        "type": "url",
-        "id": "link",
-        "label": "Link"
-      },
-      {
-        "type": "header",
-        "content": "Social media icons",
-        "info": "To display your social media accounts, link them in your [theme settings](\/editor?context=theme&category=social%20media)."
-      }, {
-        "type": "checkbox",
-        "id": "show_social",
-        "default": false,
-        "label": "Show icons on desktop"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Announcement bar"
-      }
-    ]
-  }
+    {
+      "type": "text",
+      "id": "text",
+      "default": "FREE SHIPPING - no code needed",
+      "label": "Text"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Social media icons",
+      "info": "To display your social media accounts, link them in your [theme settings](\/editor?context=theme&category=social%20media)."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "default": false,
+      "label": "Show icons on desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ]
+}
 {% endschema %}

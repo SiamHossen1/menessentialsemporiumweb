@@ -1,0 +1,203 @@
+<script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
+{% liquid
+  if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_twitter_link != blank
+    assign has_social_links = true
+  endif
+%}
+{%- style -%}
+  .header {
+    padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+    background-color: var(--primary-background);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+  }
+  @media screen and (min-width: 750px) {
+    .header {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .header {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<header class="header">
+  {% comment %} Visible on devices with a width below 768px{% endcomment %}
+  {%- liquid
+    if section.settings.menu != blank
+      render 'header-mobile'
+    endif
+  -%}
+</header>
+{% comment %} nav and overlay Visible on devices with a width below 768px {% endcomment %}
+<nav class="menu_container">
+  <div class="close_icon_container">
+    <span class="close">
+      {% render 'icon-close' %}
+    </span>
+  </div>
+  <ul class="menu h3">
+    {%- for link in section.settings.menu.links -%}
+      <li class="menu-link">
+        {%- if link.links != blank -%}
+          <div>
+            <div class="link_container">
+              <span>
+                {{- link.title | escape -}}
+              </span>
+              {% render 'icon-caret' %}
+            </div>
+            <ul class="menu dropdown-child">
+              {%- for childlink in link.links -%}
+                <li class="child_menu-link menu-link">
+                  {%- if childlink.links == blank -%}
+                    <a href="{{ childlink.url }}">
+                      {{ childlink.title | escape }}
+                    </a>
+                  {%- else -%}
+                    <div class="link_container">
+                      <span>{{ childlink.title | escape }}</span>
+                      {% render 'icon-caret' %}
+                    </div>
+                    <ul class="menu dropdown-grandchild">
+                      {%- for grandchildlink in childlink.links -%}
+                        <li class="menu-link grandchild_menu-link">
+                          <a href="{{ grandchildlink.url }}">
+                            {{ grandchildlink.title | escape }}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}">
+            <span>
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+  <div class="navbar_links_container">
+    {%- if shop.customer_accounts_enabled -%}
+      <a
+        class="mobail_account_container"
+        href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+      >
+        {% render 'icon-account' -%}
+        <span>Log in</span>
+      </a>
+      {% if has_social_links %}
+        {% render 'social-links', device: 'mobail-social_links_container' %}
+      {% endif %}
+    {%- endif -%}
+  </div>
+</nav>
+<div class="overlay"></div>
+
+<p>
+  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur eveniet sequi dicta nihil iste repudiandae,
+  tenetur, commodi rem quo necessitatibus modi vel consectetur itaque dolores libero fugit officia atque sapiente nisi
+  expedita incidunt, architecto aspernatur deleniti. Dolorem molestiae incidunt, exercitationem aliquam nam porro
+  eveniet omnis repellat saepe, animi velit. Voluptas, maxime rem facere officiis iusto quisquam temporibus dolore optio
+  numquam consequuntur repellat? Provident vel expedita recusandae quibusdam, beatae deleniti sapiente cupiditate
+  laborum. Voluptas eveniet mollitia omnis unde, at doloremque eius quod blanditiis quae soluta quo hic. At repellat
+  voluptatibus repellendus. Voluptatum autem alias expedita velit quae veritatis praesentium exercitationem pariatur
+  neque omnis rerum doloribus minus at ut est itaque enim consequatur, sit cupiditate? Temporibus architecto ullam id,
+  tempora molestiae totam nobis. Delectus esse nulla iure non in est consequatur corrupti explicabo voluptatem earum
+  itaque enim omnis culpa sint, maiores reiciendis odio ab quas! Corporis natus consequuntur eius quaerat sed? Aperiam,
+  quasi ea incidunt ipsam magni obcaecati dolor esse laboriosam iusto. Officia ea expedita est non inventore, deleniti
+  natus eos delectus deserunt incidunt atque, eius similique ipsum. Officiis aliquid commodi eos minus perspiciatis unde
+  ea, repellendus aspernatur itaque cumque soluta tempore eligendi fugit incidunt, odio accusantium explicabo accusamus
+  ipsam neque molestias qui quia nam. Commodi, impedit. Quasi minima tenetur laborum odit sunt facilis porro numquam
+  tempore error. Laudantium nihil quasi rerum illo fuga, ipsam eius odio asperiores cupiditate, ea maiores repudiandae.
+  Atque repellat impedit veniam ipsam doloribus maxime itaque dicta deserunt! Totam rerum iusto odit quisquam ut nobis
+  esse quae fugit! Quis repellat culpa aperiam quod nobis doloribus a, aut officia laudantium rem delectus. Eaque
+  molestiae fugiat earum eum a, excepturi maiores consequatur perspiciatis sequi repellat. Expedita quaerat doloribus
+  quasi nam ducimus laborum, illum nemo non officiis voluptate praesentium quisquam quidem suscipit! Quia eveniet unde
+  quas, asperiores nihil perspiciatis distinctio quo similique dignissimos possimus? Dolore dignissimos quas obcaecati
+  repudiandae non quidem nulla nemo temporibus hic. Provident quam debitis, velit perferendis possimus laborum magnam
+  rem at ullam commodi eligendi voluptate voluptatem harum quia tenetur amet quo dolorem nemo. Dolore fugiat nemo quis
+  rem qui at ut tempora sed repellat magnam, cupiditate optio id inventore praesentium, quae placeat! Ex, aut eius
+  debitis accusamus nesciunt aperiam eos omnis ad? At soluta quis rem placeat animi? Voluptatem ipsum dolorem hic
+  tempore autem? Perferendis vero animi eligendi. Sequi iusto voluptatem rerum incidunt, numquam optio sint impedit
+  aperiam obcaecati non ut sit, quidem nesciunt eaque ad, vero quas repellat id aspernatur nihil amet cum minus
+  consequuntur? Aperiam, non temporibus. Libero, incidunt! Dicta porro optio necessitatibus! Deleniti tempore soluta
+  illo dolore assumenda, eaque ea sit et praesentium possimus rerum facilis? Quos suscipit quas ipsa deserunt sed,
+  quaerat consequatur totam, non tempora dolore omnis corrupti veniam fugit voluptas ut sit adipisci temporibus facilis
+  tenetur ipsum? Maiores possimus commodi deserunt cumque culpa incidunt mollitia laudantium quidem nobis? Numquam
+  debitis praesentium dicta, quaerat perferendis, earum possimus quam quidem officia asperiores neque excepturi, eius
+  qui beatae et consequatur quo consectetur a ullam? Eum quisquam beatae totam voluptates harum, aperiam laudantium odit
+  doloremque?
+</p>
+
+{% schema %}
+{
+  "name": "Header",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

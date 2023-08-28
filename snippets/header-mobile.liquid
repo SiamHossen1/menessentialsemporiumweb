@@ -1,0 +1,46 @@
+{% comment %} This css file contains all the css for header devices with a width below 768px {% endcomment %}
+{{ 'header-mobail.css' | asset_url | stylesheet_tag }}
+
+<div class="header_drawer_container">
+  <span class="open">
+    {% render 'icon-hamburger' %}
+  </span>
+
+  {% comment %} Logo {% endcomment %}
+  <a href="{{ routes.root_url }}" class="header_logo">
+    {%- if settings.logo != blank -%}
+      <div>
+        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+        {% capture widths %}
+        {{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+        {{
+          settings.logo
+          | image_url: width: 600
+          | image_tag: widths: widths, height: logo_height, width: settings.logo_width, alt: logo_alt, preload: true
+        }}
+      </div>
+
+    {%- else -%}
+      <span class="h2">{{ shop.name }}</span>
+    {%- endif -%}
+  </a>
+
+  <div class="header_links_container">
+    {% comment %} Search {% endcomment %}
+    <span>
+      {% render 'icon-search' %}
+    </span>
+    {% comment %} Cart {% endcomment %}
+    <a href="{{ routes.cart_url }}">
+      {% if cart == empty %}
+        {% render 'icon-cart' %}
+      {% else %}
+        <div class="cart_icon_container">
+          {% render 'icon-search' %}
+          <span>{{ cart.item_count }}</span>
+        </div>
+      {% endif %}
+    </a>
+  </div>
+</div>

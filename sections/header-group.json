@@ -5,11 +5,21 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Welcome to our store",
+        "show_announcement_bar": true,
+        "text": "FREE SHIPPING - no code needed",
         "link": "",
         "show_social": false
       }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "margin_bottom": 0,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
     }
   },
-  "order": ["announcement-bar"]
+  "order": ["announcement-bar", "header"]
 }
