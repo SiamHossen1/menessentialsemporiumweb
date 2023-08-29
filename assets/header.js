@@ -45,7 +45,11 @@ class ToggleController {
     document.body.style.overflow = "auto";
   }
 }
-const toggleMenu = new ToggleController(".open", ".close", ".menu_container");
+const toggleMenu = new ToggleController(
+  ".hamburger",
+  ".close",
+  ".menu_container"
+);
 
 // Toggling dropdown visibility and caret icon rotation on click for menu links with caret icons
 
@@ -62,7 +66,8 @@ class MenuDropdownManager {
       ".dropdown-child, .dropdown-grandchild"
     );
     dropdown.classList.toggle("active");
-
+    const dropdown2 = menuLink.querySelector(".wrapper");
+    dropdown2.classList.toggle("open");
     const iconCaret = menuLink.querySelector(".icon-caret");
     iconCaret.style.transform = dropdown.classList.contains("active")
       ? "rotate(0deg)"

@@ -13,14 +13,14 @@
 .hide-header {
   transform: translateY(-105%);
 }
-.open {
+.hamburger {
   padding: 10px;
   border-radius: 50%;
   transition: background-color 0.3s;
   cursor: pointer;
   margin-left: -10px;
 }
-.open:hover {
+.hamburger:hover {
   background-color: var(--secondary-background);
 }
 .icon-hamburger,
@@ -83,7 +83,7 @@
   cursor: pointer;
 }
 .menu-link:hover {
-  background-color: var(--secondary-background);
+  background-color: var(--primary-background);
 }
 .link_container {
   display: flex;
@@ -94,15 +94,19 @@
   width: 1.5rem;
   transform: rotate(270deg);
 }
-.menu .dropdown-child,
-.menu .dropdown-grandchild {
-  max-height: 0px;
+.wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-out;
+}
+.wrapper.open {
+  grid-template-rows: 1fr;
+}
+.dropdown-child,
+.dropdown-grandchild {
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.menu .active {
-  max-height: 2000px;
-}
+
 .child_menu-link,
 .grandchild_menu-link {
   padding-inline: 1.5rem;
@@ -126,6 +130,11 @@
 }
 .icon-account {
   width: 2rem;
+}
+@media screen and (min-width: 768px) {
+  .icon-account {
+    width: 2.4rem;
+  }
 }
 .overlay {
   position: absolute;

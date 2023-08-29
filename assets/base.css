@@ -56,6 +56,28 @@ a {
 .icon {
   cursor: pointer;
 }
+.hover-line {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  cursor: pointer;
+}
+
+.hover-line::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--base-color);
+  transition: width 0.3s ease;
+}
+
+.hover-line:hover::before {
+  width: 100%;
+}
+
 /* Set the base font size using the body font scale */
 html {
   font-size: calc(var(--font-body-scale) * 62.5%);

@@ -1,0 +1,78 @@
+.desktop_header_container {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .desktop_header_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.desktop_menu_container {
+  display: flex;
+  align-items: center;
+}
+.desktop_menu_container > * {
+  margin-right: 3rem;
+}
+.desktop_nav .main_menu {
+  display: flex;
+  align-items: center;
+}
+.desktop_nav .main_menu li {
+  position: relative;
+  margin-top: 4px;
+  margin-right: 1.5rem;
+  padding-block: 0.5rem;
+}
+.desktop_nav .main_menu li a {
+  display: flex;
+}
+.desktop_nav .main_menu li a span {
+  margin-right: 0.3rem;
+}
+.desktop_nav .main_menu li ul {
+  position: absolute;
+  top: 3.6rem;
+  left: 0;
+  width: 200px;
+  background-color: var(--primary-background);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  padding-block: 1.2rem;
+  display: none;
+  font-weight: 400;
+}
+.desktop_nav .main_menu li ul li {
+  width: 100%;
+  padding-inline: 1.2rem;
+}
+.desktop_nav .main_menu li ul li:hover {
+  font-weight: 600;
+}
+.desktop_nav .main_menu li ul li a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.desktop_nav .main_menu li ul li ul {
+  left: 200px;
+  top: 0;
+}
+.desktop_nav .main_menu li:focus-within > ul,
+.desktop_nav .main_menu li:hover > ul {
+  display: initial;
+}
+.icon-dropdown {
+  width: 1.3rem;
+}
+.icon-arrow {
+  width: 1rem;
+  transform: rotate(270deg);
+}
+.desktop_header_links_container {
+  display: flex;
+  align-items: center;
+}
+.desktop_header_links_container > * {
+  margin-left: 1.5rem;
+}
