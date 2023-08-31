@@ -78,6 +78,41 @@ a {
   width: 100%;
 }
 
+.btn {
+  all: unset;
+  background-color: var(--accent-color);
+  color: var(--primary-background);
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+.padding {
+  padding-inline: 1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .padding {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .padding {
+    padding-inline: 3rem;
+  }
+}
+.right-arrow,
+.left-arrow {
+  width: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+  .right-arrow,
+  .left-arrow {
+    width: 2.2rem;
+  }
+}
 /* Set the base font size using the body font scale */
 html {
   font-size: calc(var(--font-body-scale) * 62.5%);

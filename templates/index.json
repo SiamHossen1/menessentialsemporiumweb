@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "image_sildeshow": {
+      "type": "image-sildeshow",
+      "blocks": {
+        "slide_item": {
+          "type": "Slide",
+          "settings": {
+            "heading": "Slide heading",
+            "text": "Text from here describes your slide",
+            "btn_label": "See more",
+            "btn_link": ""
+          }
+        }
+      },
+      "block_order": ["slide_item"],
+      "settings": {
+        "show_arrows": true,
+        "show_bullets": true,
+        "speed_sliding": 0.8,
+        "top_margin": 0,
+        "bottom_margin": 0
+      }
+    }
+  },
+  "order": ["image_sildeshow"]
+}

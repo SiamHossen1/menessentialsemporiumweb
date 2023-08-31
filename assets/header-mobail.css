@@ -9,10 +9,9 @@
     display: none;
   }
 }
-/* Hide the header by moving it off-screen */
-.hide-header {
+/* .hide-header {
   transform: translateY(-105%);
-}
+} */
 .hamburger {
   padding: 10px;
   border-radius: 50%;

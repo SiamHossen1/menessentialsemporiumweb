@@ -1,0 +1,334 @@
+<style>
+  .carousel {
+    position: relative;
+    margin-top: {{section.settings.top_margin}}px;
+    margin-bottom: {{section.settings.bottom_margin}}px;
+    width: 100%;
+    height: 80vh;
+  }
+
+  .carousel__track-container {
+    position: relative;
+    background: #592;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .carousel__track {
+    position: relative;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: transform ease-in {{ section.settings.speed_sliding}}s;
+  }
+
+  .carousel__slide {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+  }
+
+  .carousel__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .text_container {
+    position: absolute;
+    width: 75%;
+    text-align: center;
+    color: var(--primary-background);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  .text_container h2 {
+    text-transform: uppercase;
+  }
+  .text_container p {
+    margin-top: 2rem;
+    font-weight: 600;
+  }
+  @media screen and (min-width: 768px) {
+    .text_container p {
+      margin-top: 3rem;
+    }
+  }
+  .carousel__button {
+    color: var(--primary-background);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+  .carousel__button--left {
+    left: 0;
+  }
+
+  .carousel__button--right {
+    right: 0;
+  }
+
+  .carousel__nav {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  .carousel__indicator {
+    width: 15px;
+    height: 15px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 12px;
+    cursor: pointer;
+  }
+
+  .carousel__indicator.current-slide {
+    background: rgba(255, 255, 255, 0.75);
+  }
+
+  .hidden {
+    display: none;
+  }
+  .visibility{
+    visibility: hidden;
+  }
+</style>
+<div class="carousel">
+  <button class="carousel__button padding carousel__button--left hidden {% if section.settings.show_arrows == false %} visibility{% endif %}">
+    {% render 'icon-left-arrow' %}
+  </button>
+
+  <div class="carousel__track-container">
+    <ul class="carousel__track">
+      {% for block in section.blocks %}
+        <li class="carousel__slide {% if forloop.first %} current-slide{% endif %}">
+          {% if block.settings.image != blank %}
+            <img class="carousel__image" src="{{ block.settings.image | image_url: width: 900 }}" alt="slider_img">
+          {% else -%}
+            <img
+              class="slide"
+              src="{{'slider_img.png' | asset_img_url: '1500x741'}}"
+              alt="slider_img"
+            >
+          {% endif %}
+          <div class="text_container">
+            <h2 class="h1">{{ block.settings.heading }}</h2>
+            <p>{{ block.settings.text }}</p>
+            {% if block.settings.btn_link != blank %}
+              <a href="{{block.settings.btn_link}}">
+            {% endif %}
+            <button class="btn">{{ block.settings.btn_label }}</button>
+            {% if block.settings.btn_link != blank %}
+              </a>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <button class="carousel__button padding carousel__button--right {% if section.settings.show_arrows == false %} visibility{% endif %}">
+    {% render 'icon-right-arrow-new' %}
+  </button>
+
+  <div class="carousel__nav {% if section.settings.show_bullets == false %} visibility{% endif %}">
+    {% for block in section.blocks %}
+      <button class="carousel__indicator{% if forloop.first %} current-slide{% endif %}"></button>
+    {% endfor %}
+  </div>
+</div>
+<script>
+  const track = document.querySelector('.carousel__track');
+  const slides = Array.from(track.children);
+  const nextButton = document.querySelector('.carousel__button--right');
+  const prevButton = document.querySelector('.carousel__button--left');
+  const dotsNav = document.querySelector('.carousel__nav');
+  const dots = Array.from(dotsNav.children);
+  const slideWidth = slides[0].getBoundingClientRect().width;
+  // Arrange the slides next to one another
+  const setSlidePosition = (slide, index) => {
+    slide.style.left = slideWidth * index + 'px';
+  };
+  slides.forEach(setSlidePosition);
+
+  // Move slide
+  const moveToSlide = (currentSlide, targetSlide, targetDot, targetIndex) => {
+    const currentDot = dotsNav.querySelector('.current-slide');
+    track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+    currentSlide.classList.remove('current-slide');
+    targetSlide.classList.add('current-slide');
+
+    currentDot.classList.remove('current-slide');
+    targetDot.classList.add('current-slide');
+
+    if (targetIndex === 0) {
+      prevButton.classList.add('hidden');
+      nextButton.classList.remove('hidden');
+    } else if (targetIndex == slides.length - 1) {
+      prevButton.classList.remove('hidden');
+      nextButton.classList.add('hidden');
+    } else {
+      prevButton.classList.remove('hidden');
+      nextButton.classList.remove('hidden');
+    }
+  };
+
+  // when I click left, move slides to the left
+  prevButton.addEventListener('click', (e) => {
+    const currentSlide = track.querySelector('.current-slide');
+    const prevSlide = currentSlide.previousElementSibling;
+    const slideIndex = slides.findIndex((slide) => slide === prevSlide);
+    const targetDot = dots[slideIndex];
+    //move to the next slide
+    moveToSlide(currentSlide, prevSlide, targetDot, slideIndex);
+    if (prevSlide == currentSlide) {
+      prevButton.classlist.add('hidden');
+      moveToSlide(currentSlide, prevSlide, targetDot);
+    }
+  });
+
+  // when I click right, move slides to the right
+  nextButton.addEventListener('click', (e) => {
+    const currentSlide = track.querySelector('.current-slide');
+    const nextSlide = currentSlide.nextElementSibling;
+    const slideIndex = slides.findIndex((slide) => slide === nextSlide);
+    const targetDot = dots[slideIndex];
+
+    //move to the next slide
+    if (slideIndex != -1) moveToSlide(currentSlide, nextSlide, targetDot, slideIndex);
+  });
+
+  // when I click the nav indicators, move to that slide
+  dotsNav.addEventListener('click', (e) => {
+    const targetDot = e.target.closest('button');
+
+    if (!targetDot) return;
+
+    const currentSlide = track.querySelector('.current-slide');
+    const targetIndex = dots.findIndex((dot) => dot === targetDot);
+    const targetSlide = slides[targetIndex];
+
+    moveToSlide(currentSlide, targetSlide, targetDot, targetIndex);
+  });
+</script>
+{% schema %}
+{
+  "name": "Slideshow",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "default": true,
+      "label": "Show arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bullets",
+      "default": true,
+      "label": "Show bullets"
+    },
+    {
+      "type": "range",
+      "id": "speed_sliding",
+      "min": 0,
+      "max": 6,
+      "step": 0.1,
+      "unit": "s",
+      "label": "Speed sliding",
+      "default": 0.8
+    },
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Slide",
+      "name": "Slide Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Slide heading"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "Text from here describes your slide"
+        },
+        {
+          "type": "header",
+          "content": "Button options"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "default": "See more",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Slideshow",
+      "blocks": [
+        {
+          "type": "Slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
