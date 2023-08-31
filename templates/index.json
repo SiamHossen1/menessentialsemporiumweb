@@ -6,6 +6,27 @@
         "slide_item": {
           "type": "Slide",
           "settings": {
+            "image": "shopify:\/\/shop_images\/img-1_fb837a3a-4273-4e04-aec9-a4ae0c5cf996.webp",
+            "heading": "Slide heading",
+            "text": "Text from here describes your slide",
+            "btn_label": "See more",
+            "btn_link": ""
+          }
+        },
+        "47e5c46e-89a1-4556-81b8-9fee224c7062": {
+          "type": "Slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/img-3.webp",
+            "heading": "Slide heading",
+            "text": "Text from here describes your slide",
+            "btn_label": "See more",
+            "btn_link": ""
+          }
+        },
+        "1100a4b4-1509-4fe2-ab55-1a0fe639f168": {
+          "type": "Slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/img-2.webp",
             "heading": "Slide heading",
             "text": "Text from here describes your slide",
             "btn_label": "See more",
@@ -13,7 +34,11 @@
           }
         }
       },
-      "block_order": ["slide_item"],
+      "block_order": [
+        "slide_item",
+        "47e5c46e-89a1-4556-81b8-9fee224c7062",
+        "1100a4b4-1509-4fe2-ab55-1a0fe639f168"
+      ],
       "settings": {
         "show_arrows": true,
         "show_bullets": true,
@@ -23,5 +48,7 @@
       }
     }
   },
-  "order": ["image_sildeshow"]
+  "order": [
+    "image_sildeshow"
+  ]
 }
