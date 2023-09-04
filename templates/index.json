@@ -21,7 +21,43 @@
         "top_margin": 0,
         "bottom_margin": 0
       }
+    },
+    "home_collection": {
+      "type": "home-collections",
+      "blocks": {
+        "collection_items": {
+          "type": "Collection_Item",
+          "settings": {
+            "label_collection": "",
+            "home_collection": ""
+          }
+        }
+      },
+      "block_order": ["collection_items"],
+      "settings": {
+        "top_home_collection_margin": 45,
+        "bottom_home_collection_margin": 0
+      }
+    },
+    "sale_poster": {
+      "type": "sale-poster",
+      "settings": {
+        "sale_poster_top_margin": 45,
+        "sale_poster_bottom_margin": 0,
+        "subtitle_top": "Up to",
+        "title": "30%",
+        "subtitle_bottom": "OFF",
+        "button_label": "SEE MORE",
+        "button_link": ""
+      }
+    },
+    "new_arrival": {
+      "type": "new-arrival",
+      "settings": {
+        "new_arrival_top_margin": 45,
+        "new_arrival_bottom_margin": 0
+      }
     }
   },
-  "order": ["image_sildeshow"]
+  "order": ["image_sildeshow", "home_collection", "sale_poster", "new_arrival"]
 }

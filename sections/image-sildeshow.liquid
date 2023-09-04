@@ -1,10 +1,17 @@
 <style>
   .carousel {
     position: relative;
-    margin-top: {{section.settings.top_margin}}px;
-    margin-bottom: {{section.settings.bottom_margin}}px;
+    margin-top: {{section.settings.top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.bottom_margin| times: 0.5 | round: 0}}px;
     width: 100%;
     height: 80vh;
+  }
+
+  @media screen and (min-width: 750px) {
+    .carousel {
+    margin-top: {{section.settings.top_margin}}px;
+    margin-bottom: {{section.settings.bottom_margin}}px;
+    }
   }
 
   .carousel__track-container {
@@ -30,7 +37,7 @@
     bottom: 0;
   }
 
-  .carousel__image {
+  .carousel__image,.fallback_carousel__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -120,7 +127,7 @@
             <img class="carousel__image" src="{{ block.settings.image | image_url: width: 900 }}" alt="slider_img">
           {% else -%}
             <img
-              class="slide"
+              class="slide fallback_carousel__image"
               src="{{'slider_img.png' | asset_img_url: '1500x741'}}"
               alt="slider_img"
             >

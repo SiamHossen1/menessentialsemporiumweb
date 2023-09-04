@@ -1,0 +1,61 @@
+<style>
+  .new_arrival_container{
+    margin-top: {{section.settings.new_arrival_top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.new_arrival_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .new_arrival_container {
+      margin-top: {{section.settings.new_arrival_top_margin}}px;
+      margin-bottom: {{section.settings.new_arrival_bottom_margin}}px;
+    }
+  }
+  .new_arrival_container h1{
+    text-align: center;
+    color: var(--accent-color);
+    margin-bottom:{{section.settings.new_arrival_top_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .new_arrival_container h1{
+    margin-bottom:{{section.settings.new_arrival_top_margin}}px;
+    }
+  }
+</style>
+<section class="new_arrival_container">
+  <h1>New Arrival</h1>
+</section>
+{% schema %}
+{
+  "name": "New Arrival",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "new_arrival_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "new_arrival_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Arrival"
+    }
+  ]
+}
+{% endschema %}

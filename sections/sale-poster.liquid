@@ -1,0 +1,120 @@
+<style>
+  .sale_poster_container{
+    width: 100%;
+    height: 60vh;
+    position: relative;
+    margin-top: {{section.settings.sale_poster_top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.sale_poster_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .sale_poster_container {
+      margin-top: {{section.settings.sale_poster_top_margin}}px;
+      margin-bottom: {{section.settings.sale_poster_bottom_margin}}px;
+    }
+  }
+  .sale_poster_container .sale_poster_image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sale_poster_container .sale_poster_content{
+    color: var(--secondary-background);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10%;
+  }
+</style>
+<section class="sale_poster_container">
+  {% if section.settings.sale_poster_image != blank %}
+    <img
+      class="sale_poster_image"
+      src="{{ section.settings.sale_poster_image | image_url: width: 900 }}"
+      alt="sale_poster_image"
+    >
+  {% else %}
+    <img
+      class="sale_poster_image"
+      src="{{'slider_img.png' | asset_img_url: '1500x741'}}"
+      alt="slider_img"
+    >
+  {% endif %}
+  <div class="sale_poster_content">
+    <p class="h2">{{ section.settings.subtitle_top }}</p>
+    <p class="h0">{{ section.settings.title }}</p>
+    <p class="h2">{{ section.settings.subtitle_bottom }}</p>
+    <a href="{{section.settings.button_link}}">
+      <button class="btn">{{ section.settings.button_label }}</button>
+    </a>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Sale Poster",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "sale_poster_image",
+      "label": "Sale Poster Image"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_top",
+      "label": "Subtitle top",
+      "default": "Up to"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "30%"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_bottom",
+      "label": "Subtitle bottom",
+      "default": "OFF"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SEE MORE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "sale_poster_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "sale_poster_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sale Poster"
+    }
+  ]
+}
+{% endschema %}

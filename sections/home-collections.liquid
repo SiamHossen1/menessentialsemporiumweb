@@ -1,0 +1,148 @@
+<style>
+  .home_collection_container {
+    margin-top: {{section.settings.top_home_collection_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.bottom_home_collection_margin| times: 0.5 | round: 0}}px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .home_collection_container {
+      margin-top: {{section.settings.top_home_collection_margin}}px;
+      margin-bottom: {{section.settings.bottom_home_collection_margin}}px;
+    }
+  }
+  .home_collection_container h1{
+    text-align: center;
+    color: var(--accent-color);
+    margin-bottom:{{section.settings.top_home_collection_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .home_collection_container h1{
+    margin-bottom:{{section.settings.top_home_collection_margin}}px;
+    }
+  }
+  .home_collection_items{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    cursor: pointer;
+    width: 100%;
+  }
+  @media screen and (min-width: 768px) {
+    .home_collection_items {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem;
+    }
+  }
+  .home_collection_item{
+     width: 100%;
+     text-align: center;
+  }
+  .home_collection_item .collection_image{
+    border-radius: 50%;
+    object-fit: cover;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  .home_collection_item .collection_image:hover{
+    transform: scale(1.05);
+  }
+  @media screen and (min-width: 768px) {
+    .home_collection_item .collection_image{
+     max-width: 600px;
+  }
+  }
+  .home_collection_item h2{
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+</style>
+<section class="home_collection_container">
+  <h1>Collections</h1>
+  <div class="home_collection_items">
+    {% for block in section.blocks %}
+      <a href="{{block.settings.home_collection.url}}">
+        <div class="home_collection_item">
+          {% if block.settings.collection_image != blank %}
+            <img
+              class="collection_image"
+              src="{{ block.settings.collection_image | image_url: width: 300 }}"
+              alt="collection_image"
+            >
+          {% endif %}
+          {% if block.settings.label_collection != blank %}
+            <h2>{{ block.settings.label_collection }}</h2>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Home Collection",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "top_home_collection_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "bottom_home_collection_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Collection_Item",
+      "name": "Collection Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "collection_image",
+          "label": "Collection Image"
+        },
+        {
+          "type": "text",
+          "id": "label_collection",
+          "label": "Label Collection",
+          "default": "Men"
+        },
+        {
+          "type": "collection",
+          "id": "home_collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Home Collection",
+      "blocks": [
+        {
+          "type": "Collection_Item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
