@@ -1,5 +1,20 @@
 {
-  "current": "Default",
+  "current": {
+    "logo_width": 50,
+    "base_color": "#142C73",
+    "button_text_color": "#FFFFFF",
+    "accent_color": "#009688",
+    "primary_background": "#FFFFFF",
+    "secondary_background": "#F6F7FA",
+    "type_header_font": "avenir_next_n6",
+    "heading_scale": 100,
+    "type_body_font": "avenir_next_n4",
+    "body_scale": 100,
+    "social_facebook_link": "",
+    "social_instagram_link": "",
+    "social_youtube_link": "",
+    "social_twitter_link": ""
+  },
   "presets": {
     "Default": {
       "logo_width": 50,
