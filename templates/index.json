@@ -6,6 +6,17 @@
         "slide_item": {
           "type": "Slide",
           "settings": {
+            "image": "shopify:\/\/shop_images\/img-1_314f681d-1610-4317-85a7-115a7094dfcd.webp",
+            "heading": "Slide heading",
+            "text": "Text from here describes your slide",
+            "btn_label": "See more",
+            "btn_link": ""
+          }
+        },
+        "0276fbb0-9425-4ba5-b36b-6dbee39b179a": {
+          "type": "Slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/img-3_9bfce44a-1db2-453d-96a7-275fa5348217.webp",
             "heading": "Slide heading",
             "text": "Text from here describes your slide",
             "btn_label": "See more",
@@ -13,7 +24,10 @@
           }
         }
       },
-      "block_order": ["slide_item"],
+      "block_order": [
+        "slide_item",
+        "0276fbb0-9425-4ba5-b36b-6dbee39b179a"
+      ],
       "settings": {
         "show_arrows": true,
         "show_bullets": true,
@@ -33,7 +47,9 @@
           }
         }
       },
-      "block_order": ["collection_items"],
+      "block_order": [
+        "collection_items"
+      ],
       "settings": {
         "top_home_collection_margin": 45,
         "bottom_home_collection_margin": 0
@@ -42,13 +58,13 @@
     "sale_poster": {
       "type": "sale-poster",
       "settings": {
-        "sale_poster_top_margin": 45,
-        "sale_poster_bottom_margin": 0,
         "subtitle_top": "Up to",
         "title": "30%",
         "subtitle_bottom": "OFF",
         "button_label": "SEE MORE",
-        "button_link": ""
+        "button_link": "",
+        "sale_poster_top_margin": 45,
+        "sale_poster_bottom_margin": 0
       }
     },
     "new_arrival": {
@@ -59,5 +75,10 @@
       }
     }
   },
-  "order": ["image_sildeshow", "home_collection", "sale_poster", "new_arrival"]
+  "order": [
+    "image_sildeshow",
+    "home_collection",
+    "sale_poster",
+    "new_arrival"
+  ]
 }
