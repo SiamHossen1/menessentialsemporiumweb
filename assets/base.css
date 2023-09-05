@@ -23,20 +23,23 @@ select {
 }
 
 section,
-header {
+header,
+footer {
   padding-inline: 1.5rem;
 }
 
 @media screen and (min-width: 768px) {
   section,
-  header {
+  header,
+  footer {
     padding-inline: 2.5rem;
   }
 }
 
 @media screen and (min-width: 992px) {
   section,
-  header {
+  header,
+  footer {
     padding-inline: 3rem;
   }
 }
@@ -87,6 +90,18 @@ a {
   border-radius: 0.5rem;
   cursor: pointer;
   margin-top: 2rem;
+}
+.btn_add_to_cart {
+  all: unset;
+  background-color: var(--accent-color);
+  color: var(--primary-background);
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin: 1rem;
+  align-self: end;
+  width: 9rem;
 }
 .padding {
   padding-inline: 1.5rem;

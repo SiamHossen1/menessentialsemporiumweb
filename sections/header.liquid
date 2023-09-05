@@ -1,11 +1,10 @@
-{% comment %} Push to Develop {% endcomment %}
 <script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
 {% liquid
   if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_twitter_link != blank
     assign has_social_links = true
   endif
 %}
-{%- style -%}
+<style>
   .header {
     padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
@@ -30,7 +29,7 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-{%- endstyle -%}
+</style>
 
 <header class="header">
   {% comment %} Visible on devices with a width below 768px{% endcomment %}
