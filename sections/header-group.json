@@ -8,7 +8,7 @@
         "show_announcement_bar": true,
         "text": "FREE SHIPPING - no code needed",
         "link": "",
-        "show_social": false
+        "show_social": true
       }
     },
     "header": {
@@ -21,5 +21,8 @@
       }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }

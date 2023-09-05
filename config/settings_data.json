@@ -10,10 +10,13 @@
     "heading_scale": 100,
     "type_body_font": "avenir_next_n4",
     "body_scale": 100,
-    "social_facebook_link": "",
-    "social_instagram_link": "",
-    "social_youtube_link": "",
-    "social_twitter_link": ""
+    "social_facebook_link": "a",
+    "social_instagram_link": "a",
+    "social_youtube_link": "a",
+    "social_twitter_link": "a",
+    "content_for_index": [
+
+    ]
   },
   "presets": {
     "Default": {
