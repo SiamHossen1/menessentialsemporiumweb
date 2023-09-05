@@ -5,10 +5,12 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "footer_top_margin": 45,
-        "footer_slogan": "High quality premium & timeless clothing for every men with affordable price."
+        "footer_slogan": "High quality premium & timeless clothing for every men with affordable price.",
+        "footer_top_margin": 45
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
