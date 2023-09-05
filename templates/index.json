@@ -22,11 +22,22 @@
             "btn_label": "See more",
             "btn_link": ""
           }
+        },
+        "6c35f5e5-b802-4361-9881-6d8440e158cf": {
+          "type": "Slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/img-2.webp",
+            "heading": "Slide heading",
+            "text": "Text from here describes your slide",
+            "btn_label": "See more",
+            "btn_link": ""
+          }
         }
       },
       "block_order": [
         "slide_item",
-        "0276fbb0-9425-4ba5-b36b-6dbee39b179a"
+        "0276fbb0-9425-4ba5-b36b-6dbee39b179a",
+        "6c35f5e5-b802-4361-9881-6d8440e158cf"
       ],
       "settings": {
         "show_arrows": true,
