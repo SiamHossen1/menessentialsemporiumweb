@@ -1,0 +1,669 @@
+<style>
+     .main_collection_product_container{
+       margin-top: {{section.settings.collection_product_top_margin| times: 0.5 | round: 0}}px;
+       margin-bottom: {{section.settings.collection_product_bottom_margin| times: 0.5 | round: 0}}px;
+     }
+     @media screen and (min-width: 768px) {
+       .main_collection_product_container {
+         margin-top: {{section.settings.collection_product_top_margin}}px;
+         margin-bottom: {{section.settings.collection_product_bottom_margin}}px;
+       }
+     }
+     .main_collection_product_container h1{
+       text-align: center;
+       color: var(--accent-color);
+       margin-bottom: {{section.settings.collection_product_bottom_margin| times: 0.5 | round: 0}}px;
+     }
+     @media screen and (min-width: 768px) {
+       .main_collection_product_container h1{
+         margin-bottom: {{section.settings.collection_product_bottom_margin}}px;
+       }
+     }
+     .sort_filter_container{
+       display: none;
+     }
+    @media screen and (min-width: 768px) {
+      .sort_filter_container{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+    .sort_container{
+      justify-self: end;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+     .filter_container{
+       display: flex;
+       gap: 0.5rem;
+       align-items: center;
+       flex-wrap: wrap;
+     }
+     .filter_form{
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 2rem;
+     }
+     .filter_form > * {
+       margin-right: 2rem;
+     }
+     .filter_options{
+       position: relative;
+       display: flex;
+     }
+     .filter_title{
+       display: flex;
+       align-items: center;
+       gap: 0.4rem;
+       cursor: pointer;
+     }
+     .filter_group_display{
+       display: none;
+     }
+     @media screen and (min-width: 768px) {
+      .filter_group_display{
+        position: absolute;
+        top: 120%;
+        z-index: 5;
+        display: none;
+        width: 28rem;
+        background-color: var(--primary-background);
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        padding: 1rem;
+      }
+    }
+     .filter_group_display.active{
+       display: block;
+     }
+     .filter_group_display_price_range{
+       display: flex;
+       align-items: center;
+       gap: 1rem;
+     }
+     .filter_group_display_price_range_from,
+     .filter_group_display_price_range_to{
+       display: flex;
+       align-items: center;
+       gap: 0.5rem;
+     }
+     .filter_group_display_price_range_from input,
+     .filter_group_display_price_range_to input{
+      border: 2px solid var(--base-color);
+      padding-inline: 1rem;
+     }
+    .checkboxes{
+       width: 1.6rem;
+       height: 1.6rem;
+       background-color: aqua;
+     }
+
+    .filter_group_display_list_item{
+       display: flex;
+       align-items: center;
+       gap: 0.5rem;
+    }
+    .filter_group_display_list_item label{
+      margin-top: 0.5rem;
+    }
+    #sort-by {
+      width: 20rem;
+      padding: 0.5rem 0;
+      border: 2px solid var(--base-color);
+      border-radius: 5px;
+      background-color: #fff;
+      color: #333;
+    }
+    .active_filters{
+      margin-top: 1.5rem;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.3rem;
+      display: none;
+    }
+    @media screen and (min-width: 768px) {
+      .active_filters{
+      display: block;
+    }
+    }
+    .icon_cross{
+      width: 1rem;
+      display: inline-block;
+      color: var(--base-color);
+    }
+    .active_filters_remove_filter{
+      border: 2px solid var(--accent-color);
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+    }
+    .filter_input_apply{
+      text-align: center;
+      margin-top: 1rem;
+      width: 100%;
+      background-color: var(--accent-color);
+      color: var(--primary-background);
+      font-weight: 600;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      outline: none;
+      border: none;
+    }
+    .no_result_container{
+      text-align: center;
+      padding-block: 12rem;
+    }
+    .mobile_sort_filter_toggle{
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    @media screen and (min-width: 768px) {
+      .mobile_sort_filter_toggle{
+      display: none;
+      }
+    }
+    .icon-filter{
+      width: 2rem;
+    }
+    .mobile_filter_options{
+      margin-block: 1rem;
+    }
+    .mobile_filter_title{
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sort_filter_nav{
+     position: fixed;
+     top: 0;
+     bottom: 0;
+     right: 0;
+     right: -100%;
+     width: 80%;
+     height: 100%;
+     padding: 1.5rem;
+     background-color: var(--primary-background);
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+     transition: right 0.5s ease;
+     overflow-y: auto;
+     z-index: 5;
+    }
+    .sort_filter_nav.active {
+      right:0;
+    }
+    .filter_sort_title{
+      margin-block: 2rem;
+      text-align: center;
+      color: var(--accent-color);
+    }
+    .filter_wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+    }
+  .filter_wrapper.open {
+    grid-template-rows: 1fr;
+  }
+  .mobile_filter_group_display{
+     overflow: hidden;
+  }
+  .mobile_active_filters{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+  @media screen and (min-width: 768px) {
+    .mobile_active_filters{
+      display: none;
+    }
+    }
+  .mobile_active_filters_remove_filter{
+    border: 2px solid var(--accent-color);
+    display: flex;
+    align-items: left;
+    width: auto;
+    gap: 0.5rem;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    margin-inline: auto;
+  }
+</style>
+{% liquid
+  assign showClearAllBtn = false
+%}
+<section class="main_collection_product_container">
+  <h1>{{ collection.title | escape }}</h1>
+  <div class="sort_filter_container">
+    <div class="filter_container">
+      <form class="filter_form">
+        <p class="h3">Filter:</p>
+        {%- for filter in collection.filters -%}
+          <div class="filter_options">
+            <div class="filter_title">
+              <span class="h3">{{ filter.label }}</span>
+              {% render 'icon-dropdown' %}
+            </div>
+
+            <div class="filter_group_display">
+              {%- case filter.type -%}
+                {%- when 'boolean', 'list' -%}
+                  <ul class="filter_group_display_list h4">
+                    {%- for filter_value in filter.values -%}
+                      <li class="filter_group_display_list_item">
+                        <input
+                          type="checkbox"
+                          class="checkboxes"
+                          name="{{ filter_value.param_name }}"
+                          value="{{ filter_value.value }}"
+                          id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                          {% if filter_value.active -%}
+                            checked
+                          {%- endif %}
+                          {% if filter_value.count == 0 and filter_value.active == false -%}
+                            disabled
+                          {%- endif %}
+                        >
+                        <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                          {% if filter.label == 'Size' %}
+                            {{ filter_value.label | upcase }}
+                          {% else %}
+                            {{ filter_value.label | capitalize }}
+                          {% endif %}
+                          <span>({{ filter_value.count }})</span>
+                        </label>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+
+                {%- when 'price_range' -%}
+                  <div class="filter_group_display_price_range_container">
+                    <div class="filter_group_display_price_range">
+                      <div class="filter_group_display_price_range_from">
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input
+                          name="{{ filter.min_value.param_name }}"
+                          class="inputs"
+                          id="Filter-{{ filter.min_value.param_name }}"
+                          {% if filter.min_value.value -%}
+                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                          {%- endif %}
+                          type="number"
+                          placeholder="From"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        >
+                      </div>
+                      <div class="filter_group_display_price_range_to">
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input
+                          name="{{ filter.max_value.param_name }}"
+                          id="Filter-{{ filter.max_value.param_name }}"
+                          {% if filter.max_value.value -%}
+                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                          {%- endif %}
+                          type="number"
+                          placeholder="To"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        >
+                      </div>
+                    </div>
+                    <input type="submit" value="Apply" class="filter_input_apply">
+                  </div>
+              {%- endcase -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </form>
+    </div>
+    <div class="sort_container">
+      <p class="h3">Sort By:</p>
+      <select id="sort-by">
+        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+        {% for option in collection.sort_options %}
+          <option
+            value="{{ option.value }}"
+            {% if option.value == sort_by %}
+              selected="selected"
+            {% endif %}
+          >
+            {{ option.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="active_filters">
+    {%- for filter in collection.filters -%}
+      {%- for filter_value in filter.active_values -%}
+        {% if filter_value.count > 0 %}
+          {% assign showClearAllBtn = true %}
+          {% break %}
+        {% endif %}
+      {%- endfor -%}
+      {% if showClearAllBtn %}
+        <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="active_filters_remove_filter"
+          >Clear all</a
+        >
+        {% break %}
+      {% endif %}
+    {%- endfor -%}
+
+    {%- for filter in collection.filters -%}
+      {%- if filter.type == 'price_range' -%}
+        {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+          <a class="active_filters_remove_filter" href="{{ filter.url_to_remove }}">
+            {%- assign min_value = filter.min_value.value | default: 0 -%}
+            {%- assign max_value = filter.max_value.value | default: filter.range_max -%}
+            {{ min_value | money_without_trailing_zeros }} - {{ max_value | money_without_trailing_zeros }}
+            {% render 'icon-cross' %}
+          </a>
+        {%- endif -%}
+      {%- else -%}
+        {%- for filter_value in filter.active_values -%}
+          <a class="active_filters_remove_filter" href="{{ filter_value.url_to_remove }}">
+            {{ filter.label }}: {{ filter_value.label }}
+            {% render 'icon-cross' %}
+            {{ filter.size }}
+          </a>
+        {%- endfor -%}
+      {%- endif %}
+    {%- endfor -%}
+  </div>
+
+  <div class="overlay mobile_filter_overlay"></div>
+  <div class="mobile_sort_filter_toggle">
+    <div class="mobile_filter_title">
+      {% render 'icon-filter' %}
+      <p>Filter and sort</p>
+    </div>
+    <p>
+      {% if collection.products_count < collection.all_products_count %}
+        <span>{{ collection.products_count }} of</span>
+      {% endif -%}
+      {{- collection.all_products_count }} Products
+    </p>
+  </div>
+  <div class="mobile_active_filters">
+    {%- for filter in collection.filters -%}
+      {%- for filter_value in filter.active_values -%}
+        {% if filter_value.count > 0 %}
+          {% assign showClearAllBtn = true %}
+          {% break %}
+        {% endif %}
+      {%- endfor -%}
+      {% if showClearAllBtn %}
+        <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="mobile_active_filters_remove_filter"
+          >Clear all</a
+        >
+        {% break %}
+      {% endif %}
+    {%- endfor -%}
+
+    {%- for filter in collection.filters -%}
+      {%- if filter.type == 'price_range' -%}
+        {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+          <a class="mobile_active_filters_remove_filter" href="{{ filter.url_to_remove }}">
+            {%- assign min_value = filter.min_value.value | default: 0 -%}
+            {%- assign max_value = filter.max_value.value | default: filter.range_max -%}
+            {{ min_value | money_without_trailing_zeros }} - {{ max_value | money_without_trailing_zeros }}
+            {% render 'icon-cross' %}
+          </a>
+        {%- endif -%}
+      {%- else -%}
+        {%- for filter_value in filter.active_values -%}
+          <a class="mobile_active_filters_remove_filter" href="{{ filter_value.url_to_remove }}">
+            <span>{{ filter.label }}: {{ filter_value.label }}</span>
+            {% render 'icon-cross' %}
+          </a>
+        {%- endfor -%}
+      {%- endif %}
+    {%- endfor -%}
+  </div>
+  <nav class="sort_filter_nav">
+    <span class="close_filter_nav">
+      {% render 'icon-close' %}
+    </span>
+    <p class="filter_sort_title h3">Filter and sort</p>
+    <ul>
+      <form class="mobile_filter_form">
+        {%- for filter in collection.filters -%}
+          <div class="mobile_filter_options">
+            <div class="mobile_filter_title">
+              <span class="h3">{{ filter.label }}</span>
+              {% render 'icon-dropdown' %}
+            </div>
+          </div>
+          <div class="filter_wrapper">
+            <div class="mobile_filter_group_display">
+              {%- case filter.type -%}
+                {%- when 'boolean', 'list' -%}
+                  <ul class="filter_group_display_list h4">
+                    {%- for filter_value in filter.values -%}
+                      <li class="filter_group_display_list_item">
+                        <input
+                          type="checkbox"
+                          class="mobile_checkboxes"
+                          name="{{ filter_value.param_name }}"
+                          value="{{ filter_value.value }}"
+                          id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                          {% if filter_value.active -%}
+                            checked
+                          {%- endif %}
+                          {% if filter_value.count == 0 and filter_value.active == false -%}
+                            disabled
+                          {%- endif %}
+                        >
+                        <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">
+                          {% if filter.label == 'Size' %}
+                            {{ filter_value.label | upcase }}
+                          {% else %}
+                            {{ filter_value.label | capitalize }}
+                          {% endif %}
+                          <span>({{ filter_value.count }})</span>
+                        </label>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+
+                {%- when 'price_range' -%}
+                  <div class="filter_group_display_price_range_container">
+                    <div class="filter_group_display_price_range">
+                      <div class="filter_group_display_price_range_from">
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input
+                          name="{{ filter.min_value.param_name }}"
+                          class="inputs"
+                          id="Filter-{{ filter.min_value.param_name }}"
+                          {% if filter.min_value.value -%}
+                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                          {%- endif %}
+                          type="number"
+                          placeholder="From"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        >
+                      </div>
+                      <div class="filter_group_display_price_range_to">
+                        <span>{{ cart.currency.symbol }}</span>
+
+                        <input
+                          name="{{ filter.max_value.param_name }}"
+                          id="Filter-{{ filter.max_value.param_name }}"
+                          {% if filter.max_value.value -%}
+                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                          {%- endif %}
+                          type="number"
+                          placeholder="To"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        >
+                      </div>
+                    </div>
+                    <input type="submit" value="Apply" class="filter_input_apply">
+                  </div>
+              {%- endcase -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </form>
+    </ul>
+  </nav>
+  {% paginate collection.products by 12 %}
+    {% if collection.products.size == 0 %}
+      <div class="no_result_container">
+        <h2 class="title title--primary">No products found</h2>
+        <span class="h2">Use fewer filters or</span>
+        <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="h2 hover-line">Clear All</a>
+      </div>
+    {% else %}
+      <div class="product_card_container">
+        {% for product in collection.products %}
+          <div class="product_card">
+            <img src="{{product.featured_image | image_url: width: 250}}" alt="">
+            <div class="product_content">
+              <p class="brand">Brand : {{ product.vendor }}</p>
+              <p>{{ product.title }}</p>
+              <div class="price_container">
+                <p class="current_price">{{ product.price | money_without_trailing_zeros }}</p>
+                <p class="real_price">{{ product.compare_at_price | money_without_trailing_zeros }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {{ paginate | default_pagination }}
+    {% endif %}
+  {% endpaginate %}
+</section>
+<script>
+  Shopify.queryParams = {};
+
+  // Preserve existing query parameters
+  if (location.search.length) {
+    var params = location.search.substr(1).split('&');
+
+    for (var i = 0; i < params.length; i++) {
+      var keyValue = params[i].split('=');
+
+      if (keyValue.length) {
+        Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+      }
+    }
+  }
+
+  // Update sort_by query parameter on select change
+  document.querySelector('#sort-by').addEventListener('change', function (e) {
+    var value = e.target.value;
+
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  });
+
+  let checkboxes = document.querySelectorAll('.checkboxes');
+  checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+      document.querySelector('.filter_form').submit();
+    });
+  });
+  let mobileCheckboxes = document.querySelectorAll('.mobile_checkboxes');
+  mobileCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+      document.querySelector('.mobile_filter_form').submit();
+    });
+  });
+
+  let filterTitles = document.querySelectorAll('.filter_title');
+  let mobileFilterTitles = document.querySelectorAll('.mobile_filter_options');
+  function isPriceRangeElement(element) {
+    return (
+      element.classList.contains('filter_group_display_price_range') ||
+      element.closest('.filter_group_display_price_range')
+    );
+  }
+  function handleBodyClick(event) {
+    if (!event.target.closest('.filter_title') && !isPriceRangeElement(event.target)) {
+      setTimeout(() => {
+        let allNextSiblings = document.querySelectorAll('.filter_group_display');
+        allNextSiblings.forEach(function (element) {
+          element.classList.remove('active');
+        });
+      }, 300);
+    }
+  }
+  filterTitles.forEach(function (filterTitle) {
+    filterTitle.addEventListener('click', function () {
+      let nextSibling = filterTitle.nextElementSibling;
+      if (nextSibling) {
+        let allNextSiblings = document.querySelectorAll('.filter_group_display');
+        allNextSiblings.forEach(function (element) {
+          if (element !== nextSibling) {
+            element.classList.remove('active');
+          }
+        });
+        nextSibling.classList.toggle('active');
+      }
+    });
+  });
+  mobileFilterTitles.forEach(function (filterTitle) {
+    filterTitle.addEventListener('click', function () {
+      let nextSibling = filterTitle.nextElementSibling;
+      if (nextSibling) {
+        let allNextSiblings = document.querySelectorAll('.filter_group_display');
+        allNextSiblings.forEach(function (element) {
+          if (element !== nextSibling) {
+            element.classList.remove('open');
+          }
+        });
+        nextSibling.classList.toggle('open');
+      }
+    });
+  });
+  document.body.addEventListener('click', handleBodyClick);
+</script>
+
+{% schema %}
+{
+  "name": "Main collection product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "collection_product_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "collection_product_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

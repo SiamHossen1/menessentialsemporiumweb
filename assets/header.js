@@ -20,12 +20,11 @@ const scrollHeader = new ScrollElementController(".header", "hide-header");
 
 // Define a controller class for managing toggle behavior
 class ToggleController {
-  constructor(openSelector, closeSelector, element) {
+  constructor(openSelector, closeSelector, element, overlayElm) {
     this.openToggle = document.querySelector(openSelector);
     this.closeToggle = document.querySelector(closeSelector);
-    this.overlay = document.querySelector(".overlay");
+    this.overlay = document.querySelector(overlayElm);
     this.element = document.querySelector(element);
-
     this.openToggle.addEventListener("click", this.handleOpenClick.bind(this));
     this.closeToggle.addEventListener(
       "click",
@@ -48,9 +47,15 @@ class ToggleController {
 const toggleMenu = new ToggleController(
   ".hamburger",
   ".close",
-  ".menu_container"
+  ".menu_container",
+  ".overlay"
 );
-
+const togglefilterSortMenu = new ToggleController(
+  ".mobile_filter_title",
+  ".close_filter_nav",
+  ".sort_filter_nav",
+  ".mobile_filter_overlay"
+);
 // Toggling dropdown visibility and caret icon rotation on click for menu links with caret icons
 
 class MenuDropdownManager {
