@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-product",
+      "settings": {
+        "collection_product_top_margin": 45,
+        "collection_product_bottom_margin": 45
+      }
+    }
+  },
+  "order": ["banner"]
+}

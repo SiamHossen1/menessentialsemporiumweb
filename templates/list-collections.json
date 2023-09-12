@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main-collection-list": {
+      "type": "main-list-collections",
+      "settings": {
+        "title": "Collections",
+        "collection_list_top_margin": 45,
+        "collection_list_bottom_margin": 45
+      }
+    }
+  },
+  "order": ["main-collection-list"]
+}

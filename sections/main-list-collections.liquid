@@ -1,0 +1,113 @@
+<style>
+  .collections_list_container{
+    margin-top: {{section.settings.collection_list_top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.collection_list_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .collections_list_container {
+      margin-top: {{section.settings.collection_list_top_margin}}px;
+      margin-bottom: {{section.settings.collection_list_bottom_margin}}px;
+    }
+  }
+  .collections_list_container h1{
+    text-align: center;
+    color: var(--accent-color);
+    margin-bottom: {{section.settings.collection_list_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .collections_list_container h1{
+      margin-bottom: {{section.settings.collection_list_bottom_margin}}px;
+    }
+  }
+  .collection_list_items{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1.5rem;
+  }
+  @media screen and (min-width: 768px) {
+    .collection_list_items{
+      grid-template-columns: repeat(3,1fr);
+      gap: 2.5rem;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .collection_list_items{
+      grid-template-columns: repeat(4,1fr);
+    }
+  }
+  .collection_list_item{
+    background-color: var(--secondary-background);
+    overflow: hidden;
+    text-align: center;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: transform .3s ease-out;
+    transform: translateZ(0);
+    will-change: transform;
+    height: 100%;
+  }
+  .collection_list_item:hover{
+    transform: scale(1.07);
+  }
+  .collection_list_item img{
+    width: 100%;
+  }
+  .collection_list_item .collection_list_content{
+    padding-block: 1rem;
+  }
+</style>
+<section class="collections_list_container">
+  <h1>{{ section.settings.title }}</h1>
+  <div class="collection_list_items">
+    {%- for collection in collections -%}
+      {% if collection.title != 'Home page' %}
+        <a href="{{collection.url}}">
+          <div class="collection_list_item">
+            <img src="{{collection.featured_image | image_url: width: 250 , height: 250}}" alt="">
+            <div class="collection_list_content">
+              <p class="h3">{{ collection.title }}</p>
+              <p class="h4">{{ collection.all_products_count }} Items</p>
+            </div>
+          </div>
+        </a>
+      {% endif %}
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Collections list page",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collections"
+    },
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "collection_list_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "collection_list_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ]
+}
+{% endschema %}
