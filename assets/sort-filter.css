@@ -1,0 +1,220 @@
+.desktop_sort_filter_container {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .desktop_sort_filter_container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+}
+.filter_container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.filter_form {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 2rem;
+}
+.filter_form > * {
+  margin-right: 2rem;
+}
+.filter_options {
+  position: relative;
+  display: flex;
+}
+.filter_title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+.filter_group_display {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .filter_group_display {
+    position: absolute;
+    top: 120%;
+    z-index: 5;
+    display: none;
+    width: 28rem;
+    background-color: var(--primary-background);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 1rem;
+  }
+}
+.filter_group_display.active {
+  display: block;
+}
+.filter_group_display_list_item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filter_group_display_list_item label {
+  margin-top: 0.5rem;
+}
+.checkboxes {
+  width: 1.6rem;
+  height: 1.6rem;
+  background-color: aqua;
+}
+.filter_group_display_price_range {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.filter_group_display_price_range_from,
+.filter_group_display_price_range_to {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filter_group_display_price_range_from input,
+.filter_group_display_price_range_to input {
+  border: 2px solid var(--base-color);
+  padding-inline: 1rem;
+}
+.filter_input_apply {
+  text-align: center;
+  margin-top: 1rem;
+  width: 100%;
+  background-color: var(--accent-color);
+  color: var(--primary-background);
+  font-weight: 600;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+.sort_container {
+  justify-self: end;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.desktop_active_filters {
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+  align-items: center;
+  gap: 1.3rem;
+  flex-wrap: wrap;
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .desktop_active_filters {
+    display: flex;
+  }
+}
+.active_filters_remove_filter {
+  border: 2px solid var(--accent-color);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}
+.icon_cross {
+  width: 1rem;
+  display: inline-block;
+  color: var(--base-color);
+}
+.mobile_sort_filter_toggle {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .mobile_sort_filter_toggle {
+    display: none;
+  }
+}
+.mobile_filter_title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.icon-filter {
+  width: 2rem;
+}
+.mobile_active_filters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+@media screen and (min-width: 768px) {
+  .mobile_active_filters {
+    display: none;
+  }
+}
+.mobile_active_filters_remove_filter {
+  border: 2px solid var(--accent-color);
+  display: flex;
+  width: auto;
+  gap: 0.5rem;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  margin-inline: auto;
+}
+.mobile_sort_filter_nav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: -100%;
+  width: 80%;
+  height: 100%;
+  padding: 1.5rem;
+  background-color: var(--primary-background);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: right 0.5s ease;
+  overflow-y: auto;
+  z-index: 5;
+}
+.mobile_sort_filter_nav.active {
+  right: 0;
+}
+.filter_sort_title {
+  margin-block: 2rem;
+  text-align: center;
+  color: var(--accent-color);
+}
+.mobile_filter_options {
+  margin-block: 1rem;
+}
+.mobile_filter_title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filter_wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-out;
+}
+.filter_wrapper.open {
+  grid-template-rows: 1fr;
+}
+.mobile_filter_group_display {
+  overflow: hidden;
+}
+.filter_input_apply {
+  text-align: center;
+  margin-top: 1rem;
+  width: 100%;
+  background-color: var(--accent-color);
+  color: var(--primary-background);
+  font-weight: 600;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}

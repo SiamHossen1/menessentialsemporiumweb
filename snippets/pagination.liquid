@@ -1,0 +1,81 @@
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3.5rem;
+  }
+  @media screen and (min-width: 768px) {
+    .pagination {
+      gap: 2rem;
+      margin-top: 4.5rem;
+    }
+  }
+  .page_number {
+    transition: transform 0.5s ease;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  .page_number a,
+  .page_number span {
+    background-color: var(--secondary-background);
+    border-radius: 50%;
+    padding: 0.67rem 1.2rem;
+    font-size: 1.5rem;
+  }
+  @media screen and (min-width: 768px) {
+    .page_number a,
+    .page_number span {
+      padding: 1rem 1.6rem;
+      font-size: 1.8rem;
+    }
+  }
+  .page_number:hover {
+    transform: scale(1.1);
+  }
+  .page_item.disable {
+    display: none;
+  }
+  .page_number span.active {
+    color: var(--secondary-background);
+    background-color: var(--base-color);
+  }
+</style>
+{% if paginate.pages > 1 %}
+  <nav class="pagination_container">
+    <ul class="pagination h3">
+      {% if paginate.previous %}
+        <li class="page_item">
+          <a href="{{paginate.previous.url}}"> {% render 'icon-left-arrow' %} </a>
+        </li>
+      {% else %}
+        <li class="page_item disable">
+          <span>{% render 'icon-left-arrow' %}</span>
+        </li>
+      {% endif %}
+
+      {% for part in paginate.parts %}
+        {% if part.is_link %}
+          <li class="page_item page_number">
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          </li>
+        {% else %}
+          <li class="page_item page_number">
+            <span class="{%if part.title == paginate.current_page %} active {% endif %}">{{ part.title }}</span>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if paginate.next %}
+        <li class="page_item">
+          <a href="{{paginate.next.url}}">{% render 'icon-right-arrow-new' %}</a>
+        </li>
+      {% else %}
+        <li class="page_item disable">
+          <span>{% render 'icon-right-arrow-new' %}</span>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
