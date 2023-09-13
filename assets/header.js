@@ -53,7 +53,7 @@ const toggleMenu = new ToggleController(
 const togglefilterSortMenu = new ToggleController(
   ".mobile_filter_title",
   ".close_filter_nav",
-  ".sort_filter_nav",
+  ".mobile_sort_filter_nav",
   ".mobile_filter_overlay"
 );
 // Toggling dropdown visibility and caret icon rotation on click for menu links with caret icons
