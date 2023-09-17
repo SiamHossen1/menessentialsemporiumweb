@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main-product": {
+      "type": "main-product",
+      "settings": {
+        "product_information_top_margin": 45,
+        "product_information_bottom_margin": 45
+      }
+    }
+  },
+  "order": ["main-product"]
+}

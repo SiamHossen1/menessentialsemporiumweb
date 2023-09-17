@@ -78,3 +78,38 @@ function handleBodyClick(event) {
   }
 }
 document.body.addEventListener("click", handleBodyClick);
+
+// oop
+// Define a controller class for managing toggle behavior
+class ToggleFilterController {
+  constructor(openSelector, closeSelector, element, overlayElm) {
+    this.openToggle = document.querySelector(openSelector);
+    this.closeToggle = document.querySelector(closeSelector);
+    this.overlay = document.querySelector(overlayElm);
+    this.element = document.querySelector(element);
+    this.openToggle.addEventListener("click", this.handleOpenClick.bind(this));
+    this.closeToggle.addEventListener(
+      "click",
+      this.handleCloseClick.bind(this)
+    );
+  }
+
+  handleOpenClick() {
+    this.element.classList.add("active");
+    this.overlay.classList.add("showElement");
+    document.body.style.overflow = "hidden";
+  }
+
+  handleCloseClick() {
+    this.element.classList.remove("active");
+    this.overlay.classList.remove("showElement");
+    document.body.style.overflow = "auto";
+  }
+}
+
+const togglefilterSortMenu = new ToggleFilterController(
+  ".mobile_filter_title",
+  ".close_filter_nav",
+  ".mobile_sort_filter_nav",
+  ".mobile_filter_overlay"
+);

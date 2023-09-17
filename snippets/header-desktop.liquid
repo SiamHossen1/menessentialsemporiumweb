@@ -81,8 +81,8 @@
         {% render 'icon-cart' %}
       {% else %}
         <div class="cart_icon_container">
-          {% render 'icon-search' %}
-          <span>{{ cart.item_count }}</span>
+          {% render 'icon-cart' %}
+          <span class="cart_item_counter">{{ cart.item_count }}</span>
         </div>
       {% endif %}
     </a>

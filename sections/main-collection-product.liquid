@@ -40,7 +40,7 @@
     {% else %}
       <div class="product_card_container">
         {% for product in collection.products %}
-          <div class="product_card">
+          <a href="{{product.url}}" class="product_card">
             <img src="{{product.featured_image | image_url: width: 250}}" alt="">
             <div class="product_content">
               <p class="brand">Brand : {{ product.vendor }}</p>
@@ -50,7 +50,7 @@
                 <p class="real_price">{{ product.compare_at_price | money_without_trailing_zeros }}</p>
               </div>
             </div>
-          </div>
+          </a>
         {% endfor %}
       </div>
       {% render 'pagination', paginate: paginate %}

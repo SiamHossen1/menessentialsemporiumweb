@@ -138,6 +138,11 @@
   align-items: center;
   gap: 0.5rem;
 }
+.mobile_filter_value_title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 .icon-filter {
   width: 2rem;
 }
@@ -188,11 +193,6 @@
 }
 .mobile_filter_options {
   margin-block: 1rem;
-}
-.mobile_filter_title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 .filter_wrapper {
   display: grid;

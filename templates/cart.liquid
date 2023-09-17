@@ -1,0 +1,17 @@
+<section>
+  <h1>Cart</h1>
+  {% for item in cart.items %}
+    <div>
+      <img src="{{ item.image | img_url: 'medium' }}" alt="">
+      <h2>{{ item.product.title }}</h2>
+      <p>{{ item.price | money }}</p>
+      <p>{{ item.quantity }}</p>
+      <a href="{{ item.url_to_remove }}">Remove</a>
+      <ul>
+        {% for option in item.options_with_values -%}
+          <li>{{ option.name }}: {{ option.value }}</li>
+        {%- endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</section>
