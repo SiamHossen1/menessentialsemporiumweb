@@ -76,3 +76,16 @@
 .desktop_header_links_container > * {
   margin-left: 1.5rem;
 }
+.cart_icon_container {
+  position: relative;
+}
+.cart_icon_container .cart_item_counter {
+  position: absolute;
+  top: -40%;
+  left: 40%;
+  background-color: var(--base-color);
+  color: var(--primary-background);
+  border-radius: 50%;
+  padding: 0.2rem 0.8rem;
+  font-size: 1rem;
+}

@@ -1,0 +1,494 @@
+<style>
+  .product_information_container{
+    margin-top: {{section.settings.product_information_top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.product_information_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .product_information_container {
+      margin-top: {{section.settings.product_information_top_margin}}px;
+      margin-bottom: {{section.settings.product_information_bottom_margin}}px;
+    }
+  }
+  .producut_grid_container{
+    display: flex;
+    flex-direction: column;
+  }
+  @media screen and (min-width: 768px) {
+    .producut_grid_container{
+     display: grid;
+     grid-template-columns: repeat(2,1fr);
+     gap: 4rem;
+     text-align: left;
+    }
+  }
+  .product_info_container > *{
+    margin-bottom: 1rem;
+  }
+  @media screen and (max-width: 768px) {
+    .vendor{
+      margin-bottom: 0;
+    }
+  }
+  .product_title{
+    font-size: 2.5rem;
+  }
+  @media screen and (min-width: 768px) {
+    .product_title{
+     font-size: 3.3rem;
+    }
+  }
+  .compare_at_price{
+    text-decoration: line-through;
+  }
+  .product_price_offer{
+    color: #DF4D4D;
+  }
+  .options_container > *{
+    margin-bottom: 0.5rem;
+  }
+  .option_values{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  @media screen and (min-width: 768px) {
+    .option_values{
+      margin-bottom: 1.5rem;
+    }
+  }
+  .option_values p{
+    border: 2px solid rgb(180, 180, 180);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+  }
+  input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+  }
+  .option_radio{
+    color: var(--base-color);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    min-width: 5rem;
+    text-align: center;
+  }
+  .option_radio:has(input:checked){
+    background-color: var(--base-color);
+    color: var(--secondary-background);
+    border: 2px solid transparent;
+  }
+  .option_radio:not(:has(input:checked)) {
+    color: var(--base-color);
+    border: 2px solid #D0D4E3;
+  }
+  .option_radio:has(input:disabled){
+    opacity: 0.5;
+    text-decoration: line-through;
+  }
+  .image_container_grid{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media screen and (min-width: 768px){
+    .image_container_grid{
+     display: grid;
+     grid-template-columns: 1fr 4fr;
+     gap: 1rem;
+     max-height: 30%;
+     margin-bottom: 0;
+    }
+  }
+  .product_main_image{
+    width: 100%;
+    max-width: 30rem;
+    margin-bottom: 1.5rem;
+    margin-inline: auto;
+    order: 2;
+  }
+  @media screen and (min-width: 768px){
+    .product_main_image{
+      max-width: 100%;
+      margin-bottom: 0;
+    }
+  }
+  @media screen and (min-width: 992px){
+    .product_main_image{
+      max-width: 60rem;
+    }
+  }
+  .product_all_images{
+    display: flex;
+    overflow-x: auto;
+    order: 2;
+    height: 10rem;
+  }
+  @media screen and (min-width: 768px){
+    .product_all_images{
+      display: block;
+      overflow-y: auto;
+      scrollbar-width: 6px;
+      scrollbar-color: #D0D4E3;
+      border-radius: 1rem;
+      order: 1;
+      height: 100%;
+    }
+  }
+  @media screen and (min-width: 992px){
+    .product_all_images{
+      max-height: 60rem;
+    }
+  }
+  .product_all_images::-webkit-scrollbar {
+    height: 1rem;
+  }
+  @media screen and (min-width: 768px){
+    .product_all_images::-webkit-scrollbar {
+      width: 6px;
+    }
+  }
+  .product_all_images::-webkit-scrollbar-thumb {
+    background-color: #b4b6bb;
+    border-radius: 1rem;
+  }
+  .product_all_images::-webkit-scrollbar-thumb:hover {
+    background-color: var(--base-color);
+  }
+  .quantity_selector{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 12rem;
+    padding: 1rem;
+    margin-top: 0.4rem;
+    background-color: #F6F7FA;
+    border-radius: 0.5rem;
+  }
+  .quantity_selector_minus,.quantity_selector_plus{
+    all: unset;
+    cursor: pointer;
+    color: rgb(94, 94, 94);
+  }
+  #quantity{
+    width: 3rem;
+    -moz-appearance: textfield;
+    border: none;
+    text-align: center;
+    background-color: #F6F7FA;
+    font-size: 1.5rem;
+    color: var(--base-color);
+  }
+  #quantity::-webkit-outer-spin-button,#quantity::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+  }
+  .add_to_cart,.buy_now{
+    margin-left: 0;
+    margin-top: 1.5rem;
+    width: 10rem;
+    text-align: center;
+  }
+  .buy_now{
+    display: block;
+    margin-top: 0.5rem;
+    background-color: var(--base-color);
+  }
+  .image_container img{
+    max-width: 30rem;
+    margin-bottom: 1.5rem;
+    margin-inline: auto;
+  }
+  @media screen and (min-width: 768px){
+    .image_container img{
+      max-width: 100%;
+      margin-bottom: 0;
+    }
+  }
+  @media screen and (min-width: 992px){
+    .image_container img{
+      max-width: 60rem;
+      margin-bottom: 0;
+    }
+  }
+  .add_to_cart:disabled{
+    background-color: #B2DFDB;
+  }
+  .buy_now:disabled{
+    background-color: #EAECF3;
+  }
+  #overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 44, 115, 0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  #overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    display: block;
+    z-index: 10;
+  }
+  .show_guide_image{
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+</style>
+<section class="product_information_container">
+  <div class="producut_grid_container">
+    {% if product.images.size > 1 %}
+      <div class="image_container_grid">
+        {% if product.selected_or_first_available_variant.image %}
+          <img
+            class="product_main_image"
+            src="{{product.selected_or_first_available_variant.image | image_url}}"
+            alt=""
+          >
+        {% else %}
+          <img class="product_main_image" src="{{product.featured_image | image_url}}" alt="">
+        {% endif %}
+        <div class="product_all_images">
+          {% for image in product.images %}
+            <img class="product_single_image" onclick="change_image(this)" src="{{ image.src | image_url }}" alt="">
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="image_container">
+        <img src="{{product.featured_image | image_url}}" alt="">
+      </div>
+    {% endif %}
+
+    <div class="product_info_container">
+      <p class="vendor"><span class="h4">Vendor :</span> {{ product.vendor }}</p>
+      <h1 class="product_title">{{ product.title }}</h1>
+      <div class="price_container">
+        <p class="compare_at_price">{{ product.compare_at_price | money_without_trailing_zeros }}</p>
+        <p class="h2 {% if product.compare_at_price %} product_price_offer {% endif %}">
+          {{ product.price | money_without_trailing_zeros }}
+        </p>
+      </div>
+      {% form 'product', product %}
+        {% comment %} <input type="hidden" name="return_to" value="/products"> {% endcomment %}
+        <input id="product_id" type="hidden" name="id" value="{{product.selected_or_first_available_variant.id}}">
+        <div class="options_container">
+          {% for option in product.options_with_values %}
+            <p class="h3">
+              {{ option.name }}
+              {% if option.name == 'Size' %}
+                {% if product.type == 't-shirt' or product.type == 'panjabi' %}
+                  <span class="show_guide_image">See Guide</span>
+                {% endif %}
+              {% endif %}
+            </p>
+            <div class="option_values">
+              {% for value in option.values %}
+                <label
+                  class="option_radio"
+                >
+                  <input
+                    type="radio"
+                    name="{{ option.name}}"
+                    value="{{ value | escape}}"
+                    id="{{option.name | handleize }} - {{ value | handleize }}"
+                    {% if value == option.selected_value %}
+                      checked
+                    {% endif %}
+                    class="selected"
+                  >
+                  <span>
+                    {{- value | escape -}}
+                  </span>
+                </label>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="product_quantity_counter">
+          <label for="quantity" class="h3">Quantity</label>
+          <div class="quantity_selector">
+            <button type="button" class="quantity_selector_minus">{% render 'icon-minus' %}</button>
+            <input
+              id="quantity"
+              name="quantity"
+              value="1"
+              class="quantity_selector-input-number"
+              type="number"
+            >
+            <button type="button" class="quantity_selector_plus">{% render 'icon-plus' %}</button>
+          </div>
+        </div>
+        <button
+          {% unless product.selected_or_first_available_variant.available %}
+            disabled
+          {% endunless %}
+          class="btn_add_to_cart add_to_cart"
+          type="submit"
+        >
+          {% if product.selected_or_first_available_variant.available %}
+            Add to cart
+          {% else %}
+            Out of stock
+          {% endif %}
+        </button>
+        <button
+          {% unless product.selected_or_first_available_variant.available %}
+            disabled
+          {% endunless %}
+          class="btn_add_to_cart buy_now"
+          type="submit"
+        >
+          Buy Now
+        </button>
+        <p>{{ product.description }}</p>
+        {% if product.type == 't-shirt' or product.type == 'panjabi' %}
+          <div id="overlay">
+            <img class="size_guide" src="{{'tshirt-size1.png' | asset_img_url: '1500x741'}}" alt="">
+          </div>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+<script>
+    function change_image(image) {
+      let main_image = document.querySelector('.product_main_image');
+      main_image.src = image.src;
+    }
+
+    let product = {{ product | json }}
+
+    document.querySelectorAll('.options_container input[type="radio"]').forEach(radio =>{
+      radio.addEventListener('change',()=>{
+        //find selected options
+        let selectedOptions = []
+        document.querySelectorAll('.options_container input[type="radio"]:checked').forEach(selectedRadio =>{
+          selectedOptions.push(selectedRadio.value)
+        })
+        //finding the matched variant
+        let matchedVariant = product.variants.find(variant =>{
+          let pass = true
+          for(let i = 0 ; i < selectedOptions.length ;i++){
+            if(selectedOptions.indexOf(variant.options[i]) == -1){
+              pass = false
+              break
+            }
+          }
+          return pass
+        })
+        // change product form variant id
+        document.querySelector("#product_id").value = matchedVariant.id
+
+        //change url
+        let url = new URLParse(window.location.href, true)
+        url.query.variant = matchedVariant.id
+        window.history.replaceState(null,null,url.toString())
+
+        //change image when select variants
+        if(matchedVariant.featured_image){
+          document.querySelector(".product_main_image").setAttribute('src',matchedVariant.featured_image.src)
+        }
+        //change button
+        let add = document.querySelector(".add_to_cart")
+        let buyNow = document.querySelector(".buy_now")
+        if(matchedVariant.available){
+          add.textContent = "Add to cart"
+          add.disabled = false
+          buyNow.disabled = false
+        }else{
+          add.textContent = "Out of stock "
+          add.disabled = true
+          buyNow.disabled = true
+        }
+      })
+    })
+
+    document.querySelector(".quantity_selector_plus").addEventListener('click',() => {
+      let currentVal = Number(document.querySelector("#quantity").value)
+      document.querySelector("#quantity").value = currentVal + 1
+    })
+    document.querySelector(".quantity_selector_minus").addEventListener('click',() => {
+      let currentVal = Number(document.querySelector("#quantity").value)
+      if(currentVal > 1){
+        document.querySelector("#quantity").value = currentVal - 1
+      }
+    })
+
+    document.querySelector(".buy_now").addEventListener("click",(e)=>{
+      e.preventDefault()
+      let form = document.querySelector(".shopify-product-form")
+      let input = document.createElement('input')
+      input.value = "/checkout"
+      input.type = "hidden"
+      input.name = "return_to"
+      form.appendChild(input)
+      form.submit()
+    })
+
+
+    {% comment %} test {% endcomment %}
+    document.addEventListener("DOMContentLoaded", function () {
+      const button = document.querySelector(".show_guide_image");
+      const overlay = document.getElementById("overlay");
+
+      // Show the overlay when the button is clicked
+      button.addEventListener("click", function () {
+          overlay.style.display = "flex";
+      });
+
+      // Hide the overlay when the body is clicked
+      document.body.addEventListener("click", function (event) {
+          if (event.target === overlay) {
+              overlay.style.display = "none";
+          }
+      });
+  });
+</script>
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "product_information_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "product_information_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product information"
+    }
+  ]
+}
+{% endschema %}
