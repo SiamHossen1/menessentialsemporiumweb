@@ -1,0 +1,159 @@
+<style>
+  .releted_product_container{
+    margin-top: {{section.settings.releted_products_top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.releted_products_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .releted_product_container {
+      margin-top: {{section.settings.releted_products_top_margin}}px;
+      margin-bottom: {{section.settings.releted_products_bottom_margin}}px;
+    }
+  }
+  .product-recommendations h2{
+    color: var(--accent-color);
+    text-align: {{section.settings.heading_position}};
+    margin-bottom: {{section.settings.releted_products_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .product-recommendations h2{
+      margin-bottom: {{section.settings.releted_products_bottom_margin}}px;
+    }
+  }
+</style>
+<section class="releted_product_container">
+  <div
+    class="product-recommendations"
+    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4&intent=related"
+  >
+    {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+      {% if recommendations.intent == 'related' %}
+        <h2 class="{% if section.settings.heading_size == 'large' %} h1 {% elsif section.settings.heading_size == 'medium' %} h2 {%else section.settings.heading_size == 'small' %} h3{% endif %}">
+          {{ section.settings.heading_title }}
+        </h2>
+      {% endif %}
+      <div class="product_card_container">
+        {%- for product in recommendations.products -%}
+          <a href="{{product.url}}" class="product_card">
+            <img src="{{product.featured_image | image_url: width: 250}}" alt="">
+            <div class="product_content">
+              <p class="brand">Brand : {{ product.vendor }}</p>
+              <p>{{ product.title }}</p>
+              <div class="price_container">
+                <p class="current_price">{{ product.price | money_without_trailing_zeros }}</p>
+                <p class="real_price">{{ product.compare_at_price | money_without_trailing_zeros }}</p>
+              </div>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{% javascript %}
+  const handleIntersection = (entries, observer) => {
+    if (!entries[0].isIntersecting) return;
+
+    observer.unobserve(productRecommendationsSection);
+
+    const url = productRecommendationsSection.dataset.url;
+
+    fetch(url)
+      .then((response) => response.text())
+      .then((text) => {
+        const html = document.createElement('div');
+        html.innerHTML = text;
+        const recommendations = html.querySelector('.product-recommendations');
+
+        if (recommendations && recommendations.innerHTML.trim().length) {
+          productRecommendationsSection.innerHTML = recommendations.innerHTML;
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const productRecommendationsSection = document.querySelector('.product-recommendations');
+  const observer = new IntersectionObserver(handleIntersection, { rootMargin: '0px 0px 200px 0px' });
+
+  observer.observe(productRecommendationsSection);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Related Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_title",
+      "label": "Heading text",
+      "default": "You may also like"
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "label": "Heading position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "releted_products_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "releted_products_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related Products"
+    }
+  ]
+}
+{% endschema %}
