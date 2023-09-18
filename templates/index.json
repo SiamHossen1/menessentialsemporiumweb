@@ -50,6 +50,22 @@
     "home_collection": {
       "type": "home-collections",
       "blocks": {
+        "051a65ec-bcf6-468f-9929-93b1f4749859": {
+          "type": "Collection_Item",
+          "settings": {
+            "collection_image": "shopify:\/\/shop_images\/premium-tshirt-2_49f80b99-a4d9-4017-b266-7e70705eae44.jpg",
+            "label_collection": "Tshirt",
+            "home_collection": "t-shirt"
+          }
+        },
+        "c43aa13a-7b85-4417-8895-f5f0223d433c": {
+          "type": "Collection_Item",
+          "settings": {
+            "collection_image": "shopify:\/\/shop_images\/navy-blue-panjabi_8fbc7355-b6fa-4a96-a375-acd31a684612.jpg",
+            "label_collection": "Panjabi",
+            "home_collection": "panjabi"
+          }
+        },
         "collection_items": {
           "type": "Collection_Item",
           "settings": {
@@ -65,29 +81,13 @@
             "label_collection": "Shoe",
             "home_collection": "shoe"
           }
-        },
-        "c43aa13a-7b85-4417-8895-f5f0223d433c": {
-          "type": "Collection_Item",
-          "settings": {
-            "collection_image": "shopify:\/\/shop_images\/navy-blue-panjabi_8fbc7355-b6fa-4a96-a375-acd31a684612.jpg",
-            "label_collection": "Panjabi",
-            "home_collection": "panjabi"
-          }
-        },
-        "051a65ec-bcf6-468f-9929-93b1f4749859": {
-          "type": "Collection_Item",
-          "settings": {
-            "collection_image": "shopify:\/\/shop_images\/premium-tshirt-2_49f80b99-a4d9-4017-b266-7e70705eae44.jpg",
-            "label_collection": "Tshirt",
-            "home_collection": "t-shirt"
-          }
         }
       },
       "block_order": [
-        "collection_items",
-        "bc3b6680-4df0-406c-9c97-7adfe6bac14f",
+        "051a65ec-bcf6-468f-9929-93b1f4749859",
         "c43aa13a-7b85-4417-8895-f5f0223d433c",
-        "051a65ec-bcf6-468f-9929-93b1f4749859"
+        "collection_items",
+        "bc3b6680-4df0-406c-9c97-7adfe6bac14f"
       ],
       "settings": {
         "top_home_collection_margin": 45,

@@ -18,5 +18,8 @@
       }
     }
   },
-  "order": ["main-product", "related-products"]
+  "order": [
+    "main-product",
+    "related-products"
+  ]
 }
