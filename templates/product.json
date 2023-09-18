@@ -6,7 +6,17 @@
         "product_information_top_margin": 45,
         "product_information_bottom_margin": 45
       }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading_title": "You may also like",
+        "heading_position": "center",
+        "heading_size": "medium",
+        "releted_products_top_margin": 45,
+        "releted_products_bottom_margin": 45
+      }
     }
   },
-  "order": ["main-product"]
+  "order": ["main-product", "related-products"]
 }
