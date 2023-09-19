@@ -46,20 +46,23 @@
   </div>
 </section>
 {% javascript %}
+  // Function to handle intersection of an element
   const handleIntersection = (entries, observer) => {
     if (!entries[0].isIntersecting) return;
 
     observer.unobserve(productRecommendationsSection);
-
+    // Get the URL from the dataset of the target element
     const url = productRecommendationsSection.dataset.url;
-
+    // Fetch content from the specified URL
     fetch(url)
       .then((response) => response.text())
       .then((text) => {
+        // Create a temporary HTML container
         const html = document.createElement('div');
         html.innerHTML = text;
+        // Find the recommendations element within the fetched content
         const recommendations = html.querySelector('.product-recommendations');
-
+        // Check if recommendations exist and have content
         if (recommendations && recommendations.innerHTML.trim().length) {
           productRecommendationsSection.innerHTML = recommendations.innerHTML;
         }
@@ -68,10 +71,11 @@
         console.error(e);
       });
   };
-
+  // Select the element to observe for intersectio
   const productRecommendationsSection = document.querySelector('.product-recommendations');
+  // Create an IntersectionObserver and configure it with a root margin
   const observer = new IntersectionObserver(handleIntersection, { rootMargin: '0px 0px 200px 0px' });
-
+  // Start observing the product recommendations section
   observer.observe(productRecommendationsSection);
 {% endjavascript %}
 
