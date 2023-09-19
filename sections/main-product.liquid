@@ -21,74 +21,6 @@
      text-align: left;
     }
   }
-  .product_info_container > *{
-    margin-bottom: 1rem;
-  }
-  @media screen and (max-width: 768px) {
-    .vendor{
-      margin-bottom: 0;
-    }
-  }
-  .product_title{
-    font-size: 2.5rem;
-  }
-  @media screen and (min-width: 768px) {
-    .product_title{
-     font-size: 3.3rem;
-    }
-  }
-  .compare_at_price{
-    text-decoration: line-through;
-  }
-  .product_price_offer{
-    color: #DF4D4D;
-  }
-  .options_container > *{
-    margin-bottom: 0.5rem;
-  }
-  .option_values{
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  @media screen and (min-width: 768px) {
-    .option_values{
-      margin-bottom: 1.5rem;
-    }
-  }
-  .option_values p{
-    border: 2px solid rgb(180, 180, 180);
-    border-radius: 2rem;
-    padding: 1rem 2rem;
-  }
-  input[type="radio"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: #fff;
-    margin: 0;
-  }
-  .option_radio{
-    color: var(--base-color);
-    padding: 0.5rem 1rem;
-    border-radius: 1rem;
-    cursor: pointer;
-    min-width: 5rem;
-    text-align: center;
-  }
-  .option_radio:has(input:checked){
-    background-color: var(--base-color);
-    color: var(--secondary-background);
-    border: 2px solid transparent;
-  }
-  .option_radio:not(:has(input:checked)) {
-    color: var(--base-color);
-    border: 2px solid #D0D4E3;
-  }
-  .option_radio:has(input:disabled){
-    opacity: 0.5;
-    text-decoration: line-through;
-  }
   .image_container_grid{
     display: flex;
     flex-direction: column;
@@ -159,6 +91,96 @@
   .product_all_images::-webkit-scrollbar-thumb:hover {
     background-color: var(--base-color);
   }
+  .image_container img{
+    max-width: 30rem;
+    margin-bottom: 1.5rem;
+    margin-inline: auto;
+  }
+  @media screen and (min-width: 768px){
+    .image_container img{
+      max-width: 100%;
+      margin-bottom: 0;
+    }
+  }
+  @media screen and (min-width: 992px){
+    .image_container img{
+      max-width: 60rem;
+      margin-bottom: 0;
+    }
+  }
+  .product_info_container > *{
+    margin-bottom: 1rem;
+  }
+  @media screen and (max-width: 768px) {
+    .vendor{
+      margin-bottom: 0;
+    }
+  }
+  .product_title{
+    font-size: 2.5rem;
+  }
+  @media screen and (min-width: 768px) {
+    .product_title{
+     font-size: 3.3rem;
+    }
+  }
+  .compare_at_price{
+    text-decoration: line-through;
+  }
+  .product_price_offer{
+    color: #DF4D4D;
+  }
+  .options_container > *{
+    margin-bottom: 0.5rem;
+  }
+  .show_guide_image{
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  .option_values{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  @media screen and (min-width: 768px) {
+    .option_values{
+      margin-bottom: 1.5rem;
+    }
+  }
+  .option_values p{
+    border: 2px solid rgb(180, 180, 180);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+  }
+  .option_radio{
+    color: var(--base-color);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    min-width: 5rem;
+    text-align: center;
+  }
+  .option_radio:has(input:checked){
+    background-color: var(--base-color);
+    color: var(--secondary-background);
+    border: 2px solid transparent;
+  }
+  .option_radio:not(:has(input:checked)) {
+    color: var(--base-color);
+    border: 2px solid #D0D4E3;
+  }
+  .option_radio:has(input:disabled){
+    opacity: 0.5;
+    text-decoration: line-through;
+  }
+  input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+  }
   .quantity_selector{
     display: flex;
     align-items: center;
@@ -197,23 +219,6 @@
     margin-top: 0.5rem;
     background-color: var(--base-color);
   }
-  .image_container img{
-    max-width: 30rem;
-    margin-bottom: 1.5rem;
-    margin-inline: auto;
-  }
-  @media screen and (min-width: 768px){
-    .image_container img{
-      max-width: 100%;
-      margin-bottom: 0;
-    }
-  }
-  @media screen and (min-width: 992px){
-    .image_container img{
-      max-width: 60rem;
-      margin-bottom: 0;
-    }
-  }
   .add_to_cart:disabled{
     background-color: #B2DFDB;
   }
@@ -239,11 +244,6 @@
     margin: auto;
     display: block;
     z-index: 10;
-  }
-  .show_guide_image{
-    color: var(--accent-color);
-    font-size: 1.2rem;
-    cursor: pointer;
   }
 </style>
 <section class="product_information_container">
@@ -281,7 +281,6 @@
         </p>
       </div>
       {% form 'product', product %}
-        {% comment %} <input type="hidden" name="return_to" value="/products"> {% endcomment %}
         <input id="product_id" type="hidden" name="id" value="{{product.selected_or_first_available_variant.id}}">
         <div class="options_container">
           {% for option in product.options_with_values %}
@@ -363,97 +362,98 @@
   </div>
 </section>
 <script>
-    function change_image(image) {
-      let main_image = document.querySelector('.product_main_image');
-      main_image.src = image.src;
-    }
+  // Change product images when clicking on product images
+  function change_image(image) {
+    let main_image = document.querySelector('.product_main_image');
+    main_image.src = image.src;
+  }
+  // Getting product details from the server
+  let product = {{ product | json }}
 
-    let product = {{ product | json }}
-
-    document.querySelectorAll('.options_container input[type="radio"]').forEach(radio =>{
-      radio.addEventListener('change',()=>{
-        //find selected options
-        let selectedOptions = []
-        document.querySelectorAll('.options_container input[type="radio"]:checked').forEach(selectedRadio =>{
-          selectedOptions.push(selectedRadio.value)
-        })
-        //finding the matched variant
-        let matchedVariant = product.variants.find(variant =>{
-          let pass = true
-          for(let i = 0 ; i < selectedOptions.length ;i++){
-            if(selectedOptions.indexOf(variant.options[i]) == -1){
-              pass = false
-              break
-            }
-          }
-          return pass
-        })
-        // change product form variant id
-        document.querySelector("#product_id").value = matchedVariant.id
-
-        //change url
-        let url = new URLParse(window.location.href, true)
-        url.query.variant = matchedVariant.id
-        window.history.replaceState(null,null,url.toString())
-
-        //change image when select variants
-        if(matchedVariant.featured_image){
-          document.querySelector(".product_main_image").setAttribute('src',matchedVariant.featured_image.src)
-        }
-        //change button
-        let add = document.querySelector(".add_to_cart")
-        let buyNow = document.querySelector(".buy_now")
-        if(matchedVariant.available){
-          add.textContent = "Add to cart"
-          add.disabled = false
-          buyNow.disabled = false
-        }else{
-          add.textContent = "Out of stock "
-          add.disabled = true
-          buyNow.disabled = true
-        }
+  // Listen for changes in product options
+  document.querySelectorAll('.options_container input[type="radio"]').forEach(radio =>{
+    radio.addEventListener('change',()=>{
+      //Find selected options
+      let selectedOptions = []
+      document.querySelectorAll('.options_container input[type="radio"]:checked').forEach(selectedRadio =>{
+        selectedOptions.push(selectedRadio.value)
       })
-    })
+      // Find the matching product variant based on selected options
+      let matchedVariant = product.variants.find(variant =>{
+        let pass = true
+        for(let i = 0 ; i < selectedOptions.length ;i++){
+          if(selectedOptions.indexOf(variant.options[i]) == -1){
+            pass = false
+            break
+          }
+        }
+          return pass
+      })
+      // Update the product form with the selected variant ID
+      document.querySelector("#product_id").value = matchedVariant.id
 
-    document.querySelector(".quantity_selector_plus").addEventListener('click',() => {
-      let currentVal = Number(document.querySelector("#quantity").value)
-      document.querySelector("#quantity").value = currentVal + 1
-    })
-    document.querySelector(".quantity_selector_minus").addEventListener('click',() => {
-      let currentVal = Number(document.querySelector("#quantity").value)
-      if(currentVal > 1){
-        document.querySelector("#quantity").value = currentVal - 1
+      // Update the URL to reflect the selected variant
+      let url = new URLParse(window.location.href, true)
+      url.query.variant = matchedVariant.id
+      window.history.replaceState(null,null,url.toString())
+
+      // Change product image when selecting variants
+      if(matchedVariant.featured_image){
+        document.querySelector(".product_main_image").setAttribute('src',matchedVariant.featured_image.src)
+      }
+      // Update the 'Add to Cart' button and availability status
+      let add = document.querySelector(".add_to_cart")
+      let buyNow = document.querySelector(".buy_now")
+      if(matchedVariant.available){
+        add.textContent = "Add to cart"
+        add.disabled = false
+        buyNow.disabled = false
+      }else{
+        add.textContent = "Out of stock "
+        add.disabled = true
+        buyNow.disabled = true
       }
     })
+  })
+  // Increase the quantity when the '+' button is clicked
+  document.querySelector(".quantity_selector_plus").addEventListener('click',() => {
+    let currentVal = Number(document.querySelector("#quantity").value)
+    document.querySelector("#quantity").value = currentVal + 1
+  })
+  // Decrease the quantity when the '-' button is clicked
+  document.querySelector(".quantity_selector_minus").addEventListener('click',() => {
+    let currentVal = Number(document.querySelector("#quantity").value)
+    if(currentVal > 1){
+      document.querySelector("#quantity").value = currentVal - 1
+    }
+  })
+  // Handle 'Buy Now' button click to customize form and submit to checkout
+  document.querySelector(".buy_now").addEventListener("click",(e)=>{
+    e.preventDefault()
+    let form = document.querySelector(".shopify-product-form")
+    let input = document.createElement('input')
+    input.value = "/checkout"
+    input.type = "hidden"
+    input.name = "return_to"
+    form.appendChild(input)
+    form.submit()
+  })
+  // Execute the following code when the DOM is fully loaded
+  document.addEventListener("DOMContentLoaded", function () {
+    const button = document.querySelector(".show_guide_image");
+    const overlay = document.getElementById("overlay");
 
-    document.querySelector(".buy_now").addEventListener("click",(e)=>{
-      e.preventDefault()
-      let form = document.querySelector(".shopify-product-form")
-      let input = document.createElement('input')
-      input.value = "/checkout"
-      input.type = "hidden"
-      input.name = "return_to"
-      form.appendChild(input)
-      form.submit()
-    })
+    // Show the overlay when the button is clicked
+    button.addEventListener("click", function () {
+      overlay.style.display = "flex";
+    });
 
-
-    {% comment %} test {% endcomment %}
-    document.addEventListener("DOMContentLoaded", function () {
-      const button = document.querySelector(".show_guide_image");
-      const overlay = document.getElementById("overlay");
-
-      // Show the overlay when the button is clicked
-      button.addEventListener("click", function () {
-          overlay.style.display = "flex";
-      });
-
-      // Hide the overlay when the body is clicked
-      document.body.addEventListener("click", function (event) {
-          if (event.target === overlay) {
-              overlay.style.display = "none";
-          }
-      });
+    // Hide the overlay when the body is clicked
+    document.body.addEventListener("click", function (event) {
+      if (event.target === overlay) {
+          overlay.style.display = "none";
+      }
+    });
   });
 </script>
 {% schema %}
