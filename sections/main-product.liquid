@@ -369,7 +369,7 @@
   }
   // Getting product details from the server
   let product = {{ product | json }}
-
+  let add = document.querySelector(".add_to_cart")
   // Listen for changes in product options
   document.querySelectorAll('.options_container input[type="radio"]').forEach(radio =>{
     radio.addEventListener('change',()=>{
@@ -399,10 +399,9 @@
 
       // Change product image when selecting variants
       if(matchedVariant.featured_image){
-        document.querySelector(".product_main_image").setAttribute('src',matchedVariant.featured_image.src)
+        document.querySelector(".product_main_image")?.setAttribute('src',matchedVariant.featured_image.src)
       }
       // Update the 'Add to Cart' button and availability status
-      let add = document.querySelector(".add_to_cart")
       let buyNow = document.querySelector(".buy_now")
       if(matchedVariant.available){
         add.textContent = "Add to cart"
@@ -444,7 +443,7 @@
     const overlay = document.getElementById("overlay");
 
     // Show the overlay when the button is clicked
-    button.addEventListener("click", function () {
+    button?.addEventListener("click", function () {
       overlay.style.display = "flex";
     });
 
@@ -455,6 +454,9 @@
       }
     });
   });
+  add.addEventListener('click', ()=>{
+
+  })
 </script>
 {% schema %}
 {

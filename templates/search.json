@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main-search": {
+      "type": "main-search",
+      "settings": {
+        "main_search_top_margin": 45,
+        "main_search_bottom_margin": 45
+      }
+    }
+  },
+  "order": ["main-search"]
+}

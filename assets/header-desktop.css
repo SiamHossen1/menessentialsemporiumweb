@@ -89,3 +89,6 @@
   padding: 0.2rem 0.8rem;
   font-size: 1rem;
 }
+.cart_urls {
+  pointer-events: none;
+}

@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "cart-items": {
+      "type": "main-cart-items",
+      "settings": {
+        "cart_top_margin": 45,
+        "cart_bottom_margin": 45
+      }
+    }
+  },
+  "order": ["cart-items"]
+}
