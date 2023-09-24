@@ -1,95 +1,16 @@
 <style>
-  .cart-drawer {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: -100%;
-    width: 85%;
-    height: 100%;
-    padding: 1.5rem;
-    background-color: var(--primary-background);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: right 0.5s ease;
-    overflow-y: auto;
-    z-index: 5;
+  .main_cart_container{
+    min-height: 40vh;
+    margin-top: {{section.settings.cart_top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.cart_bottom_margin| times: 0.5 | round: 0}}px;
   }
   @media screen and (min-width: 768px) {
-    .cart-drawer {
-      width: 520px;
+    .main_cart_container {
+      margin-top: {{section.settings.cart_top_margin}}px;
+      margin-bottom: {{section.settings.cart_bottom_margin}}px;
     }
   }
-  @media screen and (min-width: 992px) {
-    .cart-drawer {
-      width: 550px;
-    }
-  }
-  .cart-drawer--active {
-    right: 0;
-  }
-  .cart-drawer::-webkit-scrollbar {
-      width: 6px;
-  }
-  .cart-drawer::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color);
-    border-radius: 1rem;
-  }
-  .cart-drawer::-webkit-scrollbar-thumb:hover {
-    background-color: var(--base-color);
-  }
-  .cart-drawer-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-inline: 0;
-    border-bottom: 2px solid var(--base-color);
-    padding-bottom: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .cart-drawer-header-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .cart-drawer-header-right-close {
-    all: unset;
-  }
-  .cart-drawer-item {
-    display: flex;
-    gap: 1rem;
-    background-color: var(--primary-background);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    {% comment %} border-radius: 1rem; {% endcomment %}
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-  }
-
-  .cart-drawer-item-image {
-    height: 100%;
-    margin-block: auto;
-  }
-
-  .cart-drawer-item-image img {
-    min-width: 10rem;
-    max-width: 15rem;
-    width: 100%;
-    height: 100%;
-  }
-  @media screen and (min-width: 400px) {
-    .cart-drawer-item-image img {
-      min-width: 12rem;
-    }
-  }
-  .cart-drawer-item-main-flex-left {
-    padding: 1rem;
-  }
-
-  .cart-drawer-item-main-flex-right span {
-    padding: 1rem;
-  }
-
-  .cart-drawer-quantity-selector {
+  .cart-quantity-selector {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -100,13 +21,13 @@
     border-radius: 0.5rem;
   }
 
-  .cart-drawer-quantity-selector button {
+  .cart-quantity-selector button {
     all: unset;
     cursor: pointer;
     color: rgb(94, 94, 94);
   }
 
-  .cart-drawer-quantity-selector input {
+  .cart-quantity-selector input {
     width: 3rem;
     -moz-appearance: textfield;
     border: none;
@@ -115,57 +36,13 @@
     font-size: 1.5rem;
     color: var(--base-color);
   }
-
-  .cart-drawer-footer {
-    border-top: 2px solid var(--base-color);
-    margin-top: 2rem;
-    padding-inline: 0;
-    padding-block: 1rem;
-  }
-
-  .cart-drawer-footer-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .cart-drawer-button {
-    all: unset;
-    background-color: var(--accent-color);
-    color: var(--primary-background);
-    width: 100%;
-    text-align: center;
-    padding: 0.5rem 0;
-    border-radius: 0.5rem;
-    margin-top: 1rem;
-  }
-  #clear-cart-button,.go-to-cart{
-    background-color: var(--base-color);
-    color: var(--primary-background);
-    display: inline-block;
-    width: 10rem;
-    margin-top: 1rem;
-    padding: 0.5rem 0;
-    text-align: center;
-    border-radius: 0.5rem;
-  }
-  .go-to-cart{
-    display: block;
-    width: 100%;
-  }
-  .cart-drawer-empty {
-    text-align: center;
-  }
 </style>
-<div class="cart-drawer">
+<section class="main_cart_container">
   <div class="cart-drawer-box">
-    {% comment %} Header section {% endcomment %}
     <header class="cart-drawer-header">
       <h2>Your cart</h2>
-
       <div class="cart-drawer-header-right">
         <span class="cart-drawer-header-right-items">{{ cart.item_count }} items</span>
-
-        <button class="cart-drawer-header-right-close" type="button">{% render 'icon-close' %}</button>
       </div>
     </header>
 
@@ -186,7 +63,7 @@
                       <a href="{{ item.url }}">{{ item.product.title }}</a>
                     </h3>
                     <span>{{ item.variant.title }}</span>
-                    <div class="cart-drawer-quantity-selector">
+                    <div class="cart-quantity-selector">
                       <button class="cart-drawer-quantity-selector-minus" type="button">
                         {% render 'icon-minus.liquid' %}
                       </button>
@@ -217,22 +94,13 @@
             <span>{{ cart.total_price | money_without_trailing_zeros }}</span>
           </div>
           <a href="/cart/clear" id="clear-cart-button">Clear All</a>
-          <a href="/cart" class="go-to-cart">Go to cart</a>
           <button type="submit" name="checkout" class="cart-drawer-button">Checkout</button>
         </footer>
       {% endif %}
     {% endform %}
   </div>
-</div>
+</section>
 <script>
-  function openCartDrawer() {
-    document.querySelector('.cart-drawer').classList.add('cart-drawer--active');
-  }
-
-  function closeCartDrawer() {
-    document.querySelector('.cart-drawer').classList.remove('cart-drawer--active');
-  }
-
   function updateCartItemCounts(count) {
     document.querySelectorAll('.cart_item_counter').forEach((el) => {
       el.textContent = count;
@@ -240,21 +108,21 @@
   }
 
   async function updateCartDrawer() {
-    const res = await fetch('/?section_id=cart-drawer');
+    const res = await fetch('/?section_id=main-cart-items');
     const text = await res.text();
     const html = document.createElement('div');
     html.innerHTML = text;
 
-    const newBox = html.querySelector('.cart-drawer').innerHTML;
+    const newBox = html.querySelector('.main_cart_container').innerHTML;
 
-    document.querySelector('.cart-drawer').innerHTML = newBox;
+    document.querySelector('.main_cart_container').innerHTML = newBox;
 
     addCartDrawerListeners();
   }
 
   function addCartDrawerListeners() {
     // Update quantities
-    document.querySelectorAll('.cart-drawer-quantity-selector button').forEach((button) => {
+    document.querySelectorAll('.cart-quantity-selector button').forEach((button) => {
       button.addEventListener('click', async () => {
         // Get line item key
         const rootItem = button.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -351,6 +219,37 @@
 </script>
 {% schema %}
 {
-  "name": "Cart drawer"
+  "name": "Cart",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "cart_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "cart_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart"
+    }
+  ]
 }
 {% endschema %}

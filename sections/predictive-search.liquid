@@ -1,0 +1,122 @@
+<style>
+  #predictive-search-results {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+    max-height: 80vh;
+    overflow-y: auto;
+    background-color: var(--primary-background);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 1rem;
+    z-index: 100;
+    margin-inline: auto;
+  }
+  @media screen and (min-width: 768px) {
+    #predictive-search-results {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      width: 100%;
+      max-width: 80rem;
+    }
+  }
+  #predictive-search-results::-webkit-scrollbar {
+    width: 6px;
+  }
+  #predictive-search-results::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 1rem;
+  }
+  #predictive-search-results::-webkit-scrollbar-thumb:hover {
+    background-color: var(--base-color);
+  }
+  .predictive-search__heading {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  .predictive-search-product {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .predictive-search__item-heading {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+</style>
+{%- if predictive_search.performed -%}
+  <div
+    id="predictive-search-results"
+  >
+    {%- if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 -%}
+      <div>
+        <h2 id="predictive-search-queries" class="predictive-search__heading">Suggestions</h2>
+        <ul
+          id="predictive-search-results-queries-list"
+          class="predictive-search__results-list list-unstyled"
+          role="group"
+          aria-labelledby="predictive-search-queries"
+        >
+          {%- for query in predictive_search.resources.queries -%}
+            <li
+              id="predictive-search-option-query-{{ forloop.index }}"
+              class="predictive-search__list-item"
+              role="option"
+              aria-selected="false"
+            >
+              <a href="{{ query.url }}" class="predictive-search__item link link--text" tabindex="-1">
+                <div class="predictive-search__item-content predictive-search__item-content--centered">
+                  <p
+                    class="predictive-search__item-heading predictive-search__item-query-result h4"
+                    aria-label="{{ query.text }}"
+                  >
+                    {{ query.styled_text }}
+                  </p>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+          {%- for collection in predictive_search.resources.collections -%}
+            <li
+              id="predictive-search-option-collection-{{ forloop.index }}"
+              class="predictive-search__list-item"
+              role="option"
+              aria-selected="false"
+            >
+              <a href="{{ collection.url }}" class="predictive-search__item link link--text" tabindex="-1">
+                <div class="predictive-search__item-content predictive-search__item-content--centered">
+                  <p class="predictive-search__item-heading h4">{{ collection.title }}</p>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {% endif %}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <div>
+        <h2 id="predictive-search-products" class="predictive-search__heading">Products</h2>
+        <ul
+          role="listbox"
+          class="predictive_search_products"
+          aria-labelledby="predictive-search-products"
+        >
+          {%- for product in predictive_search.resources.products -%}
+            <li role="option">
+              <a href="{{ product.url }}" class="predictive-search-product">
+                <img src="{{ product | image_url: width: 50 }}" alt="">
+                <span>{{ product.title }}</span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

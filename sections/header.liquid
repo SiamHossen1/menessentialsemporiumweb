@@ -1,4 +1,5 @@
 <script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
 {% liquid
   if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_twitter_link != blank
     assign has_social_links = true
@@ -30,6 +31,63 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+  .header_search_container{
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    inset: 0;
+    background-color: var(--primary-background);
+  }
+  .header_search_container.active{
+    display: flex;
+  }
+  .header_search_form{
+    position: relative;
+  }
+  #Search{
+    padding: 0.3rem 1rem;
+    width: 80vw;
+    max-width: 80rem;
+    display: block;
+    outline: none;
+    border: 2px solid var(--base-color);
+  }
+  @media screen and (min-width: 768px) {
+    #Search{
+      padding: 0.3rem 1rem;
+      width: 90vw;
+    }
+  }
+  /* clears the ‘X’ from Internet Explorer */
+  input[type=search]::-ms-clear {
+    display: none;
+    width : 0;
+    height: 0;
+  }
+  input[type=search]::-ms-reveal {
+    display: none;
+    width : 0;
+    height: 0;
+  }
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration
+  {
+    display: none;
+  }
+  .header_search_icon{
+    all: unset;
+    position: absolute;
+    top:0.6rem ;
+    right: 1rem;
+  }
+  .header_search_icon span svg{
+    width: 2rem;
+  }
 </style>
 
 <header class="header">
@@ -45,6 +103,39 @@
       render 'header-desktop'
     endif
   -%}
+
+  <predictive-search>
+    <section class="header_search_container">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="header_search_form">
+        <input
+          id="Search"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          role="combobox"
+          aria-expanded="false"
+          aria-owns="predictive-search-results"
+          aria-controls="predictive-search-results"
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          placeholder="Search"
+          autofocus
+        >
+        <button class="header_search_icon">
+          <span>
+            {% render 'icon-search' %}
+          </span>
+          {{ predictive_search.terms }}
+        </button>
+        <input name="options[prefix]" type="hidden" value="last">
+
+        <div id="predictive-search" tabindex="-1"></div>
+      </form>
+      <span class="header_search_close">
+        {% render 'icon-close' %}
+      </span>
+    </section>
+  </predictive-search>
 </header>
 {% comment %} nav and overlay Visible on devices with a width below 768px {% endcomment %}
 <nav class="menu_container">
@@ -120,7 +211,21 @@
   </div>
 </nav>
 <div class="overlay"></div>
+<script>
+  const searchIcons = document.querySelectorAll('.search_icon');
 
+  searchIcons.forEach((searchIcon) => {
+    searchIcon.addEventListener('click', () => {
+      document.querySelector('.header_search_container').classList.toggle('active');
+      document.getElementById('Search').focus();
+      document.getElementById('Search').selectionStart = document.getElementById('Search').selectionEnd =
+        document.getElementById('Search').value.length;
+    });
+  });
+  document.querySelector('.header_search_close').addEventListener('click', () => {
+    document.querySelector('.header_search_container').classList.toggle('active');
+  });
+</script>
 {% schema %}
 {
   "name": "Header",

@@ -1,0 +1,136 @@
+<style>
+  .main_search_container{
+    margin-top: {{section.settings.main_search_top_margin| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.main_search_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .main_search_container {
+      margin-top: {{section.settings.main_search_top_margin}}px;
+      margin-bottom: {{section.settings.main_search_bottom_margin}}px;
+    }
+  }
+  .main_search_container h1{
+    text-align: center;
+    color: var(--accent-color);
+    margin-bottom: {{section.settings.main_search_bottom_margin| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .main_search_container h1{
+      margin-bottom: {{section.settings.main_search_bottom_margin}}px;
+    }
+  }
+  .main_search_form{
+    position: relative;
+    margin-bottom: 4rem;
+  }
+  .main_search_input{
+    position: relative;
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+  }
+  .main_search_box{
+    display: block;
+    width: 100%;
+    max-width: 80rem;
+    outline: none;
+    border: 2px solid var(--base-color);
+    padding: 0.3rem 1rem;
+  }
+  .main_search_icon{
+    all: unset;
+    position: absolute;
+    top: 0.3rem;
+    right: 1rem;
+  }
+  .main_search_icon span svg{
+    width: 2.5rem;
+  }
+</style>
+<section class="main_search_container">
+  <h1>Search results</h1>
+  <predictive-search>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="main_search_form">
+      <div class="main_search_input">
+        <input
+          class="main_search_box"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          role="combobox"
+          aria-expanded="false"
+          aria-owns="predictive-search-results"
+          aria-controls="predictive-search-results"
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          placeholder="Search"
+        >
+        <button class="main_search_icon">
+          <span>
+            {% render 'icon-search' %}
+          </span>
+          {{ predictive_search.terms }}
+        </button>
+      </div>
+
+      <input name="options[prefix]" type="hidden" value="last">
+
+      <div id="predictive-search" tabindex="-1"></div>
+    </form>
+  </predictive-search>
+  {% paginate search.results by 12 %}
+    <div class="product_card_container">
+      {% for product in search.results %}
+        <a href="{{product.url}}" class="product_card">
+          <img src="{{product.featured_image | image_url: width: 250}}" alt="">
+          <div class="product_content">
+            <p class="brand">Brand : {{ product.vendor }}</p>
+            <p>{{ product.title }}</p>
+            <div class="price_container">
+              <p class="current_price">{{ product.price | money_without_trailing_zeros }}</p>
+              <p class="real_price">{{ product.compare_at_price | money_without_trailing_zeros }}</p>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    {% render 'pagination', paginate: paginate %}
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "Main search",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "main_search_top_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "main_search_bottom_margin",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main search"
+    }
+  ]
+}
+{% endschema %}
