@@ -183,6 +183,38 @@ a {
     width: 2.2rem;
   }
 }
+.customer_form input[type="email"],
+.customer_form input[type="password"],
+.customer_form input[type="text"] {
+  background-color: #f6f7fa;
+  border: 2px solid transparent;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 30rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: var(--base-color);
+  outline: none;
+}
+.customer_form input[type="email"]:hover,
+.customer_form input[type="password"]:hover,
+.customer_form input[type="text"]:hover {
+  border: 2px solid var(--base-color);
+}
+.customer_form input[type="email"]:focus,
+.customer_form input[type="password"]:focus,
+.customer_form input[type="text"]:focus {
+  border: 2px solid var(--base-color);
+}
+.register_submit input {
+  all: unset;
+  color: var(--primary-background);
+  background-color: var(--accent-color);
+  font-weight: 600;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
 /* Set the base font size using the body font scale */
 html {
   font-size: calc(var(--font-body-scale) * 62.5%);

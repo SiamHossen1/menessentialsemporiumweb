@@ -10,29 +10,88 @@
       margin-bottom: {{section.settings.main_login_margin_bottom}}px;
     }
   }
+  .login_page_container h1{
+    margin-bottom: 3rem;
+  }
+  .create_account_btn{
+    margin-top: 3rem;
+    font-weight: 600;
+  }
+  .create_account_btn.hover-line{
+    padding-bottom: 0;
+  }
+  .forget_password_link{
+    margin-bottom: 2rem;
+    display: inline-block;
+    font-weight: 600;
+    border-bottom: 2px solid var(--base-color);
+  }
+  .recover_password_instruction{
+    margin-bottom: 3rem;
+  }
+  .remove_recover_link{
+    margin-top: 3rem;
+    display: block;
+  }
 </style>
 <section class="login_page_container">
-  <h1>Login</h1>
-  <div class="customer_form">
-    {% form 'customer_login' %}
+  <div class="recover_password customer_form" style="display: none;">
+    <h1>Reset your password</h1>
+    <p class="recover_password_instruction">We will send you an email to reset your password</p>
+    {% form 'recover_customer_password' %}
       {{ form.errors | default_errors }}
 
       <div class="email">
-        <label for="email">Email</label>
-        <input type="email" name="customer[email]">
+        <input type="email" name="email" placeholder="Email">
       </div>
 
-      <div class="password">
-        <label for="password">Password</label>
-        <input type="password" name="customer[password]">
+      <div class="submit register_submit">
+        <input type="submit" value="Submit">
       </div>
-
-      <div class="submit">
-        <input type="submit" value="Sign in">
-      </div>
+      <a class="remove_recover_link h4" href="#">Cancel</a>
     {% endform %}
   </div>
+  <div class="login_form">
+    <h1>Login</h1>
+    <div class="customer_form">
+      {% form 'customer_login' %}
+        {{ form.errors | default_errors }}
+
+        <div class="email">
+          <input type="email" name="customer[email]" placeholder="Email">
+        </div>
+
+        <div class="password">
+          <input type="password" name="customer[password]" placeholder="Password">
+        </div>
+
+        <a class="forget_password_link" href="#recover"> Forgot your password? </a>
+
+        <div class="register_submit">
+          <input type="submit" value="Log in">
+        </div>
+      {% endform %}
+    </div>
+    <a class="create_account_btn hover-line" href="{{routes.account_register_url}}">Create account</a>
+  </div>
 </section>
+<script>
+  function checkHash() {
+    // Check if the URL contains #recover
+    if (window.location.hash === '#recover') {
+      document.querySelector('.recover_password').style.display = 'block';
+      document.querySelector('.login_form').style.display = 'none';
+    } else {
+      document.querySelector('.recover_password').style.display = 'none';
+      document.querySelector('.login_form').style.display = 'block';
+    }
+  }
+  // Check the hash when the page loads
+  window.addEventListener('load', checkHash);
+
+  // Check the hash when it changes (e.g., when #recover is added)
+  window.addEventListener('hashchange', checkHash);
+</script>
 {% schema %}
 {
   "name": "Login",
