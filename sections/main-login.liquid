@@ -1,0 +1,71 @@
+<style>
+  .login_page_container{
+    text-align: center;
+    margin-top: {{section.settings.main_login_margin_top| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.main_login_margin_bottom| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .login_page_container{
+      margin-top: {{section.settings.main_login_margin_top}}px;
+      margin-bottom: {{section.settings.main_login_margin_bottom}}px;
+    }
+  }
+</style>
+<section class="login_page_container">
+  <h1>Login</h1>
+  <div class="customer_form">
+    {% form 'customer_login' %}
+      {{ form.errors | default_errors }}
+
+      <div class="email">
+        <label for="email">Email</label>
+        <input type="email" name="customer[email]">
+      </div>
+
+      <div class="password">
+        <label for="password">Password</label>
+        <input type="password" name="customer[password]">
+      </div>
+
+      <div class="submit">
+        <input type="submit" value="Sign in">
+      </div>
+    {% endform %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Login",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "main_login_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "main_login_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Login"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,79 @@
+<style>
+  .main_register_container{
+    text-align: center;
+    margin-top: {{section.settings.main_register_margin_top| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.main_register_margin_bottom| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .main_register_container{
+      margin-top: {{section.settings.main_register_margin_top}}px;
+      margin-bottom: {{section.settings.main_register_margin_bottom}}px;
+    }
+  }
+</style>
+<section class="main_register_container">
+  <h1>Create account</h1>
+  {% form 'create_customer', return_to: routes.all_products_collection_url %}
+    {{ form.errors | default_errors }}
+
+    <div class="first-name">
+      <label for="first-name">First name</label>
+      <input type="text" name="customer[first_name]">
+    </div>
+
+    <div class="last-name">
+      <label for="last-name">Last name</label>
+      <input type="text" name="customer[last_name]">
+    </div>
+
+    <div class="email">
+      <label for="email">Email</label>
+      <input type="email" name="customer[email]">
+    </div>
+
+    <div class="password">
+      <label for="password">Password</label>
+      <input type="password" name="customer[password]">
+    </div>
+
+    <div class="submit">
+      <input type="submit" value="Create">
+    </div>
+  {% endform %}
+</section>
+{% schema %}
+{
+  "name": "Register",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "main_register_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "main_register_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Register"
+    }
+  ]
+}
+{% endschema %}

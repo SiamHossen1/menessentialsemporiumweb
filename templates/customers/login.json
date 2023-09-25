@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main-login": {
+      "type": "main-login",
+      "settings": {
+        "main_login_margin_top": 45,
+        "main_login_margin_bottom": 45
+      }
+    }
+  },
+  "order": ["main-login"]
+}

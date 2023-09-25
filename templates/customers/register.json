@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main-register": {
+      "type": "main-register",
+      "settings": {
+        "main_register_margin_top": 45,
+        "main_register_margin_bottom": 45
+      }
+    }
+  },
+  "order": ["main-register"]
+}
