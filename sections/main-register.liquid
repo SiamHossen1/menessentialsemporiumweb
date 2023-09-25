@@ -10,36 +10,90 @@
       margin-bottom: {{section.settings.main_register_margin_bottom}}px;
     }
   }
+  .main_register_container h1{
+    margin-bottom: 3rem;
+  }
+  .customer_form input[type="email"],
+  .customer_form input[type="password"],
+  .customer_form input[type="text"]{
+    background-color: #F6F7FA;
+    border: 2px solid transparent;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 30rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: var(--base-color);
+    outline: none;
+  }
+  .customer_form input[type="email"]:hover,
+  .customer_form input[type="password"]:hover,
+  .customer_form input[type="text"]:hover{
+    border: 2px solid var(--base-color);
+  }
+  .customer_form input[type="email"]:focus,
+  .customer_form input[type="password"]:focus,
+  .customer_form input[type="text"]:focus{
+    border: 2px solid var(--base-color);
+  }
+  .register_submit input{
+    all: unset;
+    color: var(--primary-background);
+    background-color: var(--accent-color);
+    font-weight: 600;
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
 </style>
 <section class="main_register_container">
   <h1>Create account</h1>
-  {% form 'create_customer', return_to: routes.all_products_collection_url %}
-    {{ form.errors | default_errors }}
+  <div class="customer_form">
+    {% form 'create_customer' %}
+      {{ form.errors | default_errors }}
 
-    <div class="first-name">
-      <label for="first-name">First name</label>
-      <input type="text" name="customer[first_name]">
-    </div>
+      <div class="first-name">
+        <input
+          type="text"
+          name="customer[first_name]"
+          {% if form.first_name %}
+            value="{{ form.first_name }}"
+          {% endif %}
+          placeholder="First name"
+        >
+      </div>
 
-    <div class="last-name">
-      <label for="last-name">Last name</label>
-      <input type="text" name="customer[last_name]">
-    </div>
+      <div class="last-name">
+        <input
+          type="text"
+          name="customer[last_name]"
+          {% if form.last_name %}
+            value="{{ form.last_name }}"
+          {% endif %}
+          placeholder="Last name"
+        >
+      </div>
 
-    <div class="email">
-      <label for="email">Email</label>
-      <input type="email" name="customer[email]">
-    </div>
+      <div class="email">
+        <input
+          type="email"
+          name="customer[email]"
+          {% if form.email %}
+            value="{{ form.email }}"
+          {% endif %}
+          placeholder="Email"
+        >
+      </div>
 
-    <div class="password">
-      <label for="password">Password</label>
-      <input type="password" name="customer[password]">
-    </div>
+      <div class="password">
+        <input type="password" name="customer[password]" placeholder="Password">
+      </div>
 
-    <div class="submit">
-      <input type="submit" value="Create">
-    </div>
-  {% endform %}
+      <div class="register_submit">
+        <input type="submit" value="Create">
+      </div>
+    {% endform %}
+  </div>
 </section>
 {% schema %}
 {
