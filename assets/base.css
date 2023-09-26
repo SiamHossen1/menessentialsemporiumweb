@@ -215,6 +215,35 @@ a {
   border-radius: 0.5rem;
   cursor: pointer;
 }
+table.order-history {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  table.order-history {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+table.order-history th {
+  background-color: #f6f7fa;
+  color: var(--base-color);
+  font-weight: bold;
+  padding: 1rem;
+  border: 2px solid var(--base-color);
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+  table.order-history td {
+    padding: 1rem;
+    border: 2px solid var(--base-color);
+  }
+}
+table.order-history tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
 /* Set the base font size using the body font scale */
 html {
   font-size: calc(var(--font-body-scale) * 62.5%);
