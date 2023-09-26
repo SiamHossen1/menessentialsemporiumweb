@@ -1,0 +1,204 @@
+<style>
+  .main_account_container{
+    text-align: center;
+    margin-top: {{section.settings.main_account_margin_top| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.main_account_margin_bottom| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .main_account_container{
+      margin-top: {{section.settings.main_account_margin_top}}px;
+      margin-bottom: {{section.settings.main_account_margin_bottom}}px;
+    }
+  }
+  .main_account_container h1{
+    margin-bottom: 3rem;
+  }
+  .log_out_btn{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 9rem;
+  }
+  .order_address_container{
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 3rem;
+    gap: 2rem;
+  }
+  @media screen and (min-width: 992px) {
+    .order_address_container{
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      text-align: center;
+    }
+  }
+  .account_order_container h2{
+    margin-bottom: 2rem;
+  }
+  @media screen and (min-width: 768px){
+    .account_order_container h2{
+      text-align: left;
+      margin-bottom: 0;
+    }
+  }
+  .order_history_mobile{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid var(--base-color);
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+  @media screen and (min-width: 768px){
+    .order_history_mobile{
+      display: none;
+    }
+  }
+  table.order-history td:first-child a {
+    text-decoration: none;
+  }
+  table.order-history td:first-child a:hover {
+    text-decoration: underline;
+  }
+  .account_address_container h2{
+    margin-bottom: 2rem;
+  }
+  .account_default_address{
+    border: 2px solid var(--base-color);
+    max-width: 25rem;
+    padding: 1rem;
+    margin:0 0 2rem;
+    text-align: left;
+  }
+  @media screen and (min-width: 992px) {
+    .account_default_address{
+      margin: 0 auto 2rem;
+    }
+  }
+</style>
+<section class="main_account_container">
+  <h1>Account</h1>
+  <div>
+    <a href="{{ routes.account_logout_url }}" class="log_out_btn hover-line">
+      {% render 'icon-account' %}
+      Log out
+    </a>
+  </div>
+  <div class="order_address_container">
+    <div class="account_order_container">
+      <h2>Order history</h2>
+      {% paginate customer.orders by 20 %}
+        {%- if customer.orders.size > 0 -%}
+          <table class="order-history">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Payment status</th>
+                <th>Fulfillment status</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td>
+                    <a
+                      href="{{ order.customer_url }}"
+                    >
+                      {{ order.name }}
+                    </a>
+                  </td>
+                  <td>
+                    {{ order.created_at | time_tag: format: 'date' }}
+                  </td>
+                  <td>
+                    {{ order.financial_status_label }}
+                  </td>
+                  <td>
+                    {{ order.fulfillment_status_label }}
+                  </td>
+                  <td>
+                    {{ order.total_net_amount | money_without_trailing_zeros }}
+                  </td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+          {%- for order in customer.orders -%}
+            <div class="order_history_mobile">
+              <div class="order_header">
+                <p>Order</p>
+                <p>Date</p>
+                <p>Payment status</p>
+                <p>Fulfillment status</p>
+                <p>Total</p>
+              </div>
+              <div class="order_body">
+                <p>
+                  <a
+                    href="{{ order.customer_url }}"
+                  >
+                    {{ order.name }}
+                  </a>
+                </p>
+                <p>{{ order.created_at | time_tag: format: 'date' }}</p>
+                <p>{{ order.financial_status_label }}</p>
+                <p>{{ order.fulfillment_status_label }}</p>
+                <p>{{ order.total_net_amount | money_without_trailing_zeros }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <p>You haven't placed any orders yet.</p>
+        {%- endif -%}
+      {% endpaginate %}
+    </div>
+    <div class="account_address_container">
+      <h2>Account details</h2>
+
+      <div class="account_default_address">{{ customer.default_address | format_address }}</div>
+
+      <a href="{{ routes.account_addresses_url }}" class="h3 hover-line">
+        View addresses ({{ customer.addresses_count }})
+      </a>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Account",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "main_account_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "main_account_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Account"
+    }
+  ]
+}
+{% endschema %}

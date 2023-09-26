@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main-order": {
+      "type": "main-order",
+      "settings": {
+        "main_order_margin_top": 45,
+        "main_order_margin_bottom": 45
+      }
+    }
+  },
+  "order": ["main-order"]
+}

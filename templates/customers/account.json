@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main-account": {
+      "type": "main-account",
+      "settings": {
+        "main_account_margin_top": 45,
+        "main_account_margin_bottom": 45
+      }
+    }
+  },
+  "order": ["main-account"]
+}

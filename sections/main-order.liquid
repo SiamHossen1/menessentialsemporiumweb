@@ -1,0 +1,290 @@
+<style>
+  .main_order_container{
+    text-align: center;
+    margin-top: {{section.settings.main_order_margin_top| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.main_order_margin_bottom| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .main_order_container{
+      margin-top: {{section.settings.main_order_margin_top}}px;
+      margin-bottom: {{section.settings.main_order_margin_bottom}}px;
+    }
+  }
+  .main_order_container h1{
+    margin-bottom: 1.5rem;
+  }
+  .back_to_account{
+    margin-bottom: 2rem;
+  }
+  .order_address_details_container{
+    width: 100%;
+    max-width: 90rem;
+    margin: 0 auto;
+  }
+  .order_details_container h2{
+    margin-bottom: 1rem;
+  }
+  .order_address_details{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  @media screen and (min-width: 768px) {
+    .order_address_details{
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .order_address_details > * {
+    text-align: left;
+    border: 1px solid var(--base-color);
+    padding: 1rem;
+  }
+  @media screen and (min-width: 768px) {
+    .order_address_details > * {
+      border: 2px solid var(--base-color);
+    }
+  }
+  .customer_order_billing_address h2,
+  .customer_order_shipping_address h2{
+    margin-bottom: 1rem;
+  }
+  tfoot tr td{
+    border: 2px solid transparent !important;
+  }
+  tfoot tr:last-child td{
+    border-bottom: 2px solid var(--base-color) !important;
+  }
+  tfoot tr td:first-child{
+    text-align: left;
+    border-left: 2px solid var(--base-color) !important;
+  }
+  tfoot tr td:last-child{
+    text-align: right;
+    border-right: 2px solid var(--base-color) !important;
+  }
+  .order_item_details{
+    border-top: 1px solid var(--base-color);
+    padding: 1rem;
+  }
+  .order_item_details > *{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .order_item_details > * p:last-child{
+    text-align: right;
+  }
+  .order_item_titles{
+    text-align: left;
+  }
+  .order_item_price{
+    text-align: right;
+  }
+  .order_item_title a{
+    font-size: 1.3rem;
+    word-break: keep-all;
+  }
+  @media screen and (min-width: 500px) {
+    .order_item_title a{
+      font-size: 1.4rem;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .order_time{
+      margin-bottom: 1rem;
+    }
+  }
+  .mobile_total_price{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--base-color);
+    border-bottom: 1px solid var(--base-color);
+    padding: 1rem;
+  }
+  .price_titles{
+    text-align: left;
+  }
+  .price_value{
+    text-align: right;
+  }
+  @media screen and (min-width: 768px){
+    .order_details_mobile{
+      display: none;
+    }
+  }
+</style>
+<section class="main_order_container">
+  <h1>Account</h1>
+  <a href="{{ routes.account_url }}" class="h3 hover-line back_to_account">Return to Account details</a>
+  <div class="order_address_details_container">
+    <div class="order_details_container">
+      <h2>Order {{ order.name }}</h2>
+      <p class="order_time">Placed on {{ order.created_at | time_tag: format: 'date_at_time' }}</p>
+      <table class="order-history">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr>
+              <td>
+                <div>
+                  {%- if line_item.url != blank -%}
+                    <a href="{{ line_item.url }}">{{ line_item.title }}</a>
+                  {%- else -%}
+                    <p>{{ line_item.title }}</p>
+                  {%- endif -%}
+                </div>
+              </td>
+              <td>
+                {{ line_item.price | money_without_trailing_zeros }}
+              </td>
+              <td>
+                {{ line_item.quantity }}
+              </td>
+              <td>
+                {{ line_item.final_price | money_without_trailing_zeros }}
+              </td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Subtotal</td>
+            <td colspan="3">{{ order.line_items_subtotal_price | money_without_trailing_zeros }}</td>
+          </tr>
+          {%- for shipping_method in order.shipping_methods -%}
+            <tr>
+              <td>Shipping({{ shipping_method.title }})</td>
+              <td colspan="3">{{ shipping_method.price | money_without_trailing_zeros }}</td>
+            </tr>
+          {%- endfor -%}
+          {%- for tax_line in order.tax_lines -%}
+            <tr>
+              <td>
+                {{ tax_line.title -}}
+                (
+                {{- tax_line.rate | times: 100 }}%)
+              </td>
+              <td colspan="3">{{ tax_line.price | money_without_trailing_zeros }}</td>
+            </tr>
+          {%- endfor -%}
+          <tr>
+            <td>Total</td>
+            <td colspan="3">{{ order.total_net_amount | money_without_trailing_zeros }}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="order_details_mobile">
+        {%- for line_item in order.line_items -%}
+          <div class="order_item_details">
+            <div class="order_item_titles">
+              <p>Product</p>
+              <p class="order_item_title">
+                {%- if line_item.url != blank -%}
+                  <a href="{{ line_item.url }}">{{ line_item.title }}</a>
+                {%- else -%}
+                  <p>{{ line_item.title }}</p>
+                {%- endif -%}
+              </p>
+            </div>
+            <div class="order_item_unit_price">
+              <p>Price</p>
+              <p>{{ line_item.price | money_without_trailing_zeros }}</p>
+            </div>
+            <div class="order_item_quantity">
+              <p>Quantity</p>
+              <p>{{ line_item.quantity }}</p>
+            </div>
+            <div class="order_item_final_price">
+              <p>Total</p>
+              <p>{{ line_item.final_price | money_without_trailing_zeros }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+        <div class="mobile_total_price">
+          {%- for shipping_method in order.shipping_methods -%}
+            {%- for tax_line in order.tax_lines -%}
+              <div class="price_titles">
+                <p>Subtotal</p>
+                <p>Shipping({{ shipping_method.title }})</p>
+                <p>
+                  {{ tax_line.title -}}
+                  (
+                  {{- tax_line.rate | times: 100 }}%)
+                </p>
+                <p>Total</p>
+              </div>
+              <div class="price_value">
+                <p>{{ order.line_items_subtotal_price | money_without_trailing_zeros }}</p>
+                <p>{{ shipping_method.price | money_without_trailing_zeros }}</p>
+                <p>{{ tax_line.price | money_without_trailing_zeros }}</p>
+                <p>{{ order.total_net_amount | money_without_trailing_zeros }}</p>
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    <div class="order_address_details">
+      <div class="customer_order_billing_address">
+        <h2>Billing address</h2>
+        <p>Payment status: {{ order.financial_status_label }}</p>
+        <div>
+          {{ order.billing_address | format_address }}
+        </div>
+      </div>
+      <div class="customer_order_shipping_address">
+        <h2>Shipping address</h2>
+        <p>Fulfillment status: {{ order.fulfillment_status_label }}</p>
+        <div>
+          {{ order.shipping_address | format_address }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Order",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "main_order_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "main_order_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Order"
+    }
+  ]
+}
+{% endschema %}
