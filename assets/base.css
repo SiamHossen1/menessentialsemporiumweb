@@ -254,6 +254,15 @@ table.order-history th {
 table.order-history tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+.product_card_add_to_cart,
+.product_card_select {
+  all: unset;
+  background-color: var(--accent-color);
+  color: var(--primary-background);
+  padding: 0.3rem 1rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+}
 /* Set the base font size using the body font scale */
 html {
   font-size: calc(var(--font-body-scale) * 62.5%);

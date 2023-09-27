@@ -20,7 +20,7 @@
   }
   @media screen and (min-width: 768px) {
     .footer_container{
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(4,1fr);
     }
     .footer_container > * {
       margin-bottom: 0;
@@ -61,9 +61,122 @@
       margin-top: 0;
     }
   }
+  .language_selector_container{
+    text-align: center;
+  }
+  @media screen and (min-width: 768px){
+    .language_selector_container{
+      text-align: left;
+    }
+  }
+  .language_selector_container h3{
+    margin-bottom: 1rem;
+  }
+  .disclosure{
+    position: relative;
+  }
+  .disclosure__button{
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: var(--secondary-background);
+    border-radius: 0.3rem;
+    text-align: center;
+  }
+  @media screen and (max-width: 768px){
+    .disclosure__button{
+      margin: 0 auto;
+    }
+  }
+  .disclosure__list{
+    position: absolute;
+    bottom: 4.5rem;
+    background-color: var(--primary-background);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 1rem 2.4rem;
+    border-radius: 0.5rem;
+    text-align: left;
+  }
+  @media screen and (max-width: 768px){
+    .disclosure__list{
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 </style>
 <footer class="footer">
   <div class="footer_container">
+    <div class="language_selector_container">
+      <h3>Language</h3>
+      {% if localization.available_countries.size > 1 %}
+        <localization-form>
+          {% form 'localization' %}
+            <div class="disclosure">
+              <button type="button" class="disclosure__button" aria-expanded="false" aria-controls="CountryList">
+                {{ localization.country.name }} ({{ localization.country.currency.iso_code }}
+                {{ localization.country.currency.symbol }})
+
+                {% render 'icon-dropdown' %}
+              </button>
+              <ul id="CountryList" role="list" class="disclosure__list" hidden>
+                {% for country in localization.available_countries %}
+                  <li class="disclosure__item" tabindex="-1">
+                    <a
+                      href="#"
+                      {% if country.iso_code == localization.country.iso_code %}
+                        aria-current="true"
+                      {% endif %}
+                      data-value="{{ country.iso_code }}"
+                    >
+                      {{ country.name }} ({{ country.currency.iso_code }}
+                      {{ country.currency.symbol }})
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+
+              <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+            </div>
+          {% endform %}
+        </localization-form>
+      {% endif %}
+      {% if localization.available_languages.size > 1 %}
+        <localization-form>
+          {% form 'localization' %}
+            <div class="disclosure">
+              <button type="button" class="disclosure__button" aria-expanded="false" aria-controls="LanguageList">
+                {{ localization.language.endonym_name | capitalize }}
+
+                {% render 'icon-dropdown' %}
+              </button>
+
+              <ul id="LanguageList" role="list" class="disclosure__list" hidden>
+                {% for language in localization.available_languages %}
+                  <li class="disclosure__item" tabindex="-1">
+                    <a
+                      href="#"
+                      {% if language.iso_code == localization.language.iso_code %}
+                        aria-current="true"
+                      {% endif %}
+                      hreflang="{{ language.iso_code }}"
+                      lang="{{ language.iso_code }}"
+                      data-value="{{ language.iso_code }}"
+                    >
+                      {{ language.endonym_name | capitalize }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+
+              <input type="hidden" name="language_code" value="{{ localization.language.iso_code }}">
+            </div>
+          {% endform %}
+        </localization-form>
+      {% endif %}
+    </div>
     <div class="brand">
       <a href="{{ routes.root_url }}">
         {%- if settings.logo != blank -%}
@@ -124,6 +237,60 @@
     </div>
   </div>
 </footer>
+<script>
+  class LocalizationForm extends HTMLElement {
+    constructor() {
+      super();
+      this.elements = {
+        input: this.querySelector('input[name="language_code"], input[name="country_code"]'),
+        button: this.querySelector('button'),
+        panel: this.querySelector('ul'),
+      };
+      this.elements.button.addEventListener('click', this.openSelector.bind(this));
+      this.elements.button.addEventListener('focusout', this.closeSelector.bind(this));
+      this.addEventListener('keyup', this.onContainerKeyUp.bind(this));
+
+      this.querySelectorAll('a').forEach((item) => item.addEventListener('click', this.onItemClick.bind(this)));
+    }
+
+    hidePanel() {
+      this.elements.button.setAttribute('aria-expanded', 'false');
+      this.elements.panel.setAttribute('hidden', true);
+    }
+
+    onContainerKeyUp(event) {
+      if (event.code.toUpperCase() !== 'ESCAPE') return;
+
+      this.hidePanel();
+      this.elements.button.focus();
+    }
+
+    onItemClick(event) {
+      event.preventDefault();
+      const form = this.querySelector('form');
+      this.elements.input.value = event.currentTarget.dataset.value;
+      if (form) form.submit();
+    }
+
+    openSelector() {
+      this.elements.button.focus();
+      this.elements.panel.toggleAttribute('hidden');
+      this.elements.button.setAttribute(
+        'aria-expanded',
+        (this.elements.button.getAttribute('aria-expanded') === 'false').toString()
+      );
+    }
+
+    closeSelector(event) {
+      const shouldClose = event.relatedTarget && event.relatedTarget.nodeName === 'BUTTON';
+      if (event.relatedTarget === null || shouldClose) {
+        this.hidePanel();
+      }
+    }
+  }
+
+  customElements.define('localization-form', LocalizationForm);
+</script>
 {% schema %}
 {
   "name": "Footer",

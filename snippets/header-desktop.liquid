@@ -80,7 +80,9 @@
       <div class="cart_icon_container">
         {% render 'icon-cart' %}
         {% if cart.item_count > 0 %}
-          <span class="cart_item_counter">{{ cart.item_count }}</span>
+          <span class="cart_item_counter">{{ cart.item_count }} </span>
+        {% else %}
+          <span class="cart_item_counter">0</span>
         {% endif %}
       </div>
     </a>
