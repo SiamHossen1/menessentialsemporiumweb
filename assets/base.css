@@ -185,7 +185,8 @@ a {
 }
 .customer_form input[type="email"],
 .customer_form input[type="password"],
-.customer_form input[type="text"] {
+.customer_form input[type="text"],
+.address_input {
   background-color: #f6f7fa;
   border: 2px solid transparent;
   margin-bottom: 2rem;
@@ -194,17 +195,26 @@ a {
   padding: 1rem;
   border-radius: 0.5rem;
   color: var(--base-color);
+  font-weight: 600;
   outline: none;
 }
 .customer_form input[type="email"]:hover,
 .customer_form input[type="password"]:hover,
-.customer_form input[type="text"]:hover {
+.customer_form input[type="text"]:hover,
+.address_input:hover {
   border: 2px solid var(--base-color);
 }
 .customer_form input[type="email"]:focus,
 .customer_form input[type="password"]:focus,
-.customer_form input[type="text"]:focus {
+.customer_form input[type="text"]:focus,
+.address_input:focus {
   border: 2px solid var(--base-color);
+}
+.customer_form input[type="email"]::placeholder,
+.customer_form input[type="password"]::placeholder,
+.customer_form input[type="text"]::placeholder,
+.address_input::placeholder {
+  font-weight: 400;
 }
 .register_submit input {
   all: unset;

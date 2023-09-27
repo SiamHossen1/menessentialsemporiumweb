@@ -1,0 +1,371 @@
+<style>
+  .main_address_container{
+    text-align: center;
+    margin-top: {{section.settings.main_address_margin_top| times: 0.5 | round: 0}}px;
+    margin-bottom: {{section.settings.main_address_margin_bottom| times: 0.5 | round: 0}}px;
+  }
+  @media screen and (min-width: 768px) {
+    .main_address_container{
+      margin-top: {{section.settings.main_address_margin_top}}px;
+      margin-bottom: {{section.settings.main_address_margin_bottom}}px;
+    }
+  }
+  .main_address_container h1{
+    margin-bottom: 1.5rem;
+  }
+  .add_address_wrapper{
+    width: 100%;
+    max-width: 50rem;
+    margin: 2rem auto;
+  }
+  .add_address_container,.edit_address_container{
+    display: none;
+  }
+  .add_address_container.active,
+  .edit_address_container.active{
+    display: block;
+  }
+  .add_address_container h2,.edit_address_container h2{
+    text-align: left;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+  }
+  .edit_address_container h2{
+    margin-top: 2rem;
+  }
+  .add_address_input_container{
+    display: flex;
+    flex-direction: column;
+  }
+  .address_input{
+    max-width: 100%;
+  }
+  .new_address_submit_container{
+    text-align: left;
+  }
+  .cancel_address,.cancel_edit_address{
+    background-color: rgb(224, 86, 62);
+  }
+  .edit_address_li{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 3rem;
+    padding: 1.5rem;
+    text-align: left;
+    border-radius: 0.5rem;
+  }
+  .address-delete-form{
+    display: inline;
+  }
+</style>
+<section class="main_address_container">
+  <h1>Addresses</h1>
+  <a href="{{ routes.account_url }}" class="h3 hover-line">Return to Account details</a>
+  <div class="add_address_wrapper">
+    <button type="button" class="btn new_address_toggle">Add a new address</button>
+    <div class="add_address_container">
+      <h2>Add a new address</h2>
+      {% form 'customer_address', customer.new_address %}
+        <div class="add_address_input_container">
+          <input
+            type="text"
+            class="address_input"
+            id="AddressFirstNameNew"
+            name="address[first_name]"
+            value="{{ form.first_name }}"
+            autocomplete="given-name"
+            placeholder="First Name"
+          >
+          <input
+            type="text"
+            class="address_input"
+            id="AddressLastNameNew"
+            name="address[last_name]"
+            value="{{ form.last_name }}"
+            autocomplete="family-name"
+            placeholder="Last name"
+          >
+          <input
+            type="text"
+            class="address_input"
+            id="AddressCompanyNew"
+            name="address[company]"
+            value="{{ form.company }}"
+            autocomplete="organization"
+            placeholder="Company"
+          >
+          <input
+            type="text"
+            class="address_input"
+            id="AddressAddress1New"
+            name="address[address1]"
+            value="{{ form.address1 }}"
+            autocomplete="address-line1"
+            placeholder="Address1"
+          >
+          <input
+            type="text"
+            class="address_input"
+            id="AddressAddress2New"
+            name="address[address2]"
+            value="{{ form.address2 }}"
+            autocomplete="address-line2"
+            placeholder="Address2"
+          >
+          <input
+            type="text"
+            class="address_input"
+            id="AddressCityNew"
+            name="address[city]"
+            value="{{ form.city }}"
+            autocomplete="address-level2"
+            placeholder="City"
+          >
+          <input
+            type="text"
+            class="address_input"
+            id="AddressZipNew"
+            name="address[zip]"
+            value="{{ form.zip }}"
+            autocapitalize="characters"
+            autocomplete="postal-code"
+            placeholder="Postal/Zip code"
+          >
+          <input
+            type="tel"
+            class="address_input"
+            id="AddressPhoneNew"
+            name="address[phone]"
+            value="{{ form.phone }}"
+            autocomplete="tel"
+            placeholder="Phone"
+          >
+          <div class="select">
+            <select
+              class="address_input"
+              id="AddressCountryNew"
+              name="address[country]"
+              data-default="{{ form.country }}"
+              autocomplete="country"
+            >
+              {{ all_country_option_tags }}
+            </select>
+          </div>
+          <div class="new_address_submit_container">
+            <div>
+              {{ form.set_as_default_checkbox }}
+              <label for="address_default_address_new">Set as default address</label>
+            </div>
+            <div>
+              <button class="btn">Add address</button>
+              <button class="btn cancel_address" type="reset">Cancel</button>
+            </div>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+    <ul>
+      {%- for address in customer.addresses -%}
+        <li class="edit_address_li">
+          {%- if address == customer.default_address -%}
+            <h2>Default</h2>
+          {%- endif -%}
+          {{ address | format_address }}
+          <button
+            type="button"
+            class="btn edit_address_toggle"
+          >
+            Edit
+          </button>
+          <form
+            class="address-delete-form"
+            method="post"
+            action="/account/addresses/{{ address.id }}"
+          >
+            <input type="hidden" name="_method" value="delete">
+            <button
+              type="submit"
+              class="btn cancel_address"
+            >
+              Delete
+            </button>
+          </form>
+          <div class="edit_address_container">
+            <h2>Edit address</h2>
+            {%- form 'customer_address', address -%}
+              <div class="edit_address_input_container">
+                <input
+                  type="text"
+                  class="address_input"
+                  id="AddressFirstNameNew"
+                  name="address[first_name]"
+                  value="{{ form.first_name }}"
+                  autocomplete="given-name"
+                  placeholder="First Name"
+                >
+                <input
+                  type="text"
+                  class="address_input"
+                  id="AddressLastNameNew"
+                  name="address[last_name]"
+                  value="{{ form.last_name }}"
+                  autocomplete="family-name"
+                  placeholder="Last name"
+                >
+                <input
+                  type="text"
+                  class="address_input"
+                  id="AddressCompanyNew"
+                  name="address[company]"
+                  value="{{ form.company }}"
+                  autocomplete="organization"
+                  placeholder="Company"
+                >
+                <input
+                  type="text"
+                  class="address_input"
+                  id="AddressAddress1New"
+                  name="address[address1]"
+                  value="{{ form.address1 }}"
+                  autocomplete="address-line1"
+                  placeholder="Address1"
+                >
+                <input
+                  type="text"
+                  class="address_input"
+                  id="AddressAddress2New"
+                  name="address[address2]"
+                  value="{{ form.address2 }}"
+                  autocomplete="address-line2"
+                  placeholder="Address2"
+                >
+                <input
+                  type="text"
+                  class="address_input"
+                  id="AddressCityNew"
+                  name="address[city]"
+                  value="{{ form.city }}"
+                  autocomplete="address-level2"
+                  placeholder="City"
+                >
+                <input
+                  type="text"
+                  class="address_input"
+                  id="AddressZipNew"
+                  name="address[zip]"
+                  value="{{ form.zip }}"
+                  autocapitalize="characters"
+                  autocomplete="postal-code"
+                  placeholder="Postal/Zip code"
+                >
+                <input
+                  type="tel"
+                  class="address_input"
+                  id="AddressPhoneNew"
+                  name="address[phone]"
+                  value="{{ form.phone }}"
+                  autocomplete="tel"
+                  placeholder="Phone"
+                >
+                <div class="select">
+                  <select
+                    class="address_input"
+                    id="AddressCountryNew"
+                    name="address[country]"
+                    default="{{ form.country }}"
+                    autocomplete="country"
+                  >
+                    {{ all_country_option_tags }}
+                    <option value="{{ form.country }}" selected>{{ form.country }}</option>
+                  </select>
+                </div>
+                <div class="new_address_submit_container">
+                  <div>
+                    {{ form.set_as_default_checkbox }}
+                    <label for="address_default_address_new">Set as default address</label>
+                  </div>
+                  <div>
+                    <button class="btn">Update address</button>
+                    <button class="btn cancel_edit_address" type="reset">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            {% endform %}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+<script>
+  let newAddressToggleBtn = document.querySelector('.new_address_toggle');
+  let editAddressToggleBtns = document.querySelectorAll('.edit_address_toggle');
+  let editAddresses = document.querySelectorAll('.edit_address_container');
+  let cancelEditAddresses = document.querySelectorAll('.cancel_edit_address');
+  let newAddress = newAddressToggleBtn.nextElementSibling;
+  let cancelNewAddress = document.querySelector('.cancel_address');
+  newAddressToggleBtn.addEventListener('click', function () {
+    newAddress.classList.toggle('active');
+  });
+  cancelNewAddress.addEventListener('click', function () {
+    newAddress.classList.remove('active');
+  });
+  editAddressToggleBtns.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      // Check if the corresponding editAddress already has 'active' class
+      const isAlreadyActive = editAddresses[index].classList.contains('active');
+
+      // Remove the 'active' class from all editAddresses
+      editAddresses.forEach((address) => {
+        address.classList.remove('active');
+      });
+
+      // Toggle the 'active' class only if it's not already active
+      if (!isAlreadyActive) {
+        editAddresses[index].classList.add('active');
+      }
+    });
+  });
+  cancelEditAddresses.forEach((cancelBtn) => {
+    cancelBtn.addEventListener('click', () => {
+      editAddresses.forEach((editBtn) => {
+        editBtn.classList.remove('active');
+      });
+    });
+  });
+</script>
+{% schema %}
+{
+  "name": "Order",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "main_address_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "main_address_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 45
+    }
+  ],
+  "presets": [
+    {
+      "name": "Order"
+    }
+  ]
+}
+{% endschema %}
