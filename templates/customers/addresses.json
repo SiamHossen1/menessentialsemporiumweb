@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main-address": {
+      "type": "main-address",
+      "settings": {
+        "main_address_margin_top": 45,
+        "main_address_margin_bottom": 45
+      }
+    }
+  },
+  "order": ["main-address"]
+}
