@@ -370,6 +370,7 @@
   // Getting product details from the server
   let product = {{ product | json }}
   let add = document.querySelector(".add_to_cart")
+
   // Listen for changes in product options
   document.querySelectorAll('.options_container input[type="radio"]').forEach(radio =>{
     radio.addEventListener('change',()=>{

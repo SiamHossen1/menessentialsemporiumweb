@@ -65,6 +65,7 @@
     <div class="add_address_container">
       <h2>Add a new address</h2>
       {% form 'customer_address', customer.new_address %}
+        {{ form.errors | default_errors }}
         <div class="add_address_input_container">
           <input
             type="text"
@@ -192,6 +193,7 @@
           <div class="edit_address_container">
             <h2>Edit address</h2>
             {%- form 'customer_address', address -%}
+              {{ form.errors | default_errors }}
               <div class="edit_address_input_container">
                 <input
                   type="text"
