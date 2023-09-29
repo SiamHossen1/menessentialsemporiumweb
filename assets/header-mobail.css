@@ -10,7 +10,7 @@
   }
 }
 .hide-header {
-  /* transform: translateY(-105%); */
+  transform: translateY(-105%);
 }
 .hamburger {
   padding: 10px;

@@ -7,17 +7,16 @@
 %}
 <style>
   .header {
+    position: sticky;
+    top: 0;
+    width:100%;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
     padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
     margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
     background-color: var(--primary-background);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    position: -webkit-sticky;
-    position: sticky;
-    width:100%;
-    top: 0;
-    z-index: 1;
-    transition: transform 0.3s ease-in-out;
   }
   @media screen and (min-width: 768px) {
     .header {
@@ -202,7 +201,11 @@
         href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
       >
         {% render 'icon-account' -%}
-        <span>Log in</span>
+        {% if customer %}
+          <span>Account</span>
+        {% else %}
+          <span>Log in</span>
+        {% endif %}
       </a>
       {% if has_social_links %}
         {% render 'social-links', device: 'mobail-social_links_container' %}
