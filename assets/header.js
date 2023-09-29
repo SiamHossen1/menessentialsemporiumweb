@@ -7,6 +7,7 @@ class ScrollElementController {
     window.addEventListener("scroll", this.handleScroll.bind(this));
   }
   handleScroll() {
+    console.log(this.element.parentNode);
     const currentScrollPos = window.scrollY;
     if (this.prevScrollPos > currentScrollPos) {
       this.element.classList.remove(this.elementToggleClass);

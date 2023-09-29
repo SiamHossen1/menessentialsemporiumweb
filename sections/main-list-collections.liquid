@@ -60,7 +60,11 @@
   <h1>{{ section.settings.title }}</h1>
   <div class="collection_list_items">
     {%- for collection in collections -%}
-      {% if collection.title != 'Home page' %}
+      {% if collection.title != 'Home page'
+        and collection.title != 'Ensign'
+        and collection.title != 'Fabrilife'
+        and collection.title != 'Locale'
+      %}
         <a href="{{collection.url}}">
           <div class="collection_list_item">
             <img src="{{collection.featured_image | image_url: width: 250 , height: 250}}" alt="">
